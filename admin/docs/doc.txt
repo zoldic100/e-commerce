@@ -1,0 +1,41 @@
+<?php ?> <?= ?>
+we create  $noNavBar
+
+to  call nav bar  in all pages expext pages that containe noNavBar variable
+withe this condition
+ if(!isset($noNavBar)){
+include($temps."/navbar.php");
+}
+
+redirectToHome($errorMsg,$seconds=3) v1
+ to redirect To Home it accept two param 
+ $errorMsg Echo the error message,
+ $seconds Seconds before Redirecting,
+.
+redirectToHome($errorMsg,$url,$seconds=3) v2
+ to redirect To Home it accept two param 
+ $errorMsg Echo the error message,
+ $url = link to redirect to
+ $seconds Seconds before Redirecting,
+.
+checkItems function v1
+  check items in database  [it accept parameter]
+  $select = the item to select => colomn name
+
+  $from = table to select from;
+
+  $value = the value to check
+
+countItems function v1
+  function to count Number of items rows
+  $items = the item to count 
+  $table = the table to choose from
+.
+function getLatest($select, $table, $order, $limit) v1 
+  ==> grt latest Items  from database
+  ** $select = field to select
+  ** $table= table to select from
+  ** $order the desc ordering
+  ** $limit = number of records to getLates
+**
+
