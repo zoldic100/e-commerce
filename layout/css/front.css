@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #efe3c3;
+  --bg-color:#E8EAE9;
 }
 /*start main rules*/
 body{
@@ -30,13 +30,18 @@ h1{
 
 /* start product cards*/
 /* end nav-bar*/
+.header{
+  height: 600px;
+}
   .nav-img {
     max-width: 36px;
   }
 
   .navbar {
     background-color: var(--bg-color) !important;
-    padding: 10px 20px;
+    height: 25px;
+    
+    
   }
   .navbar .cart {
     padding: 10px 20px;
@@ -46,17 +51,23 @@ h1{
     font-size: x-large;
   }
 /* end nav-bar*/
-/* end landing*/
-.landing .border-right{
-height:40vh;
+/* end hero*/
+.hero {
+height: 532px;
+width: 1226px;
+background-image: url('../site-img/hero-bg.jpg');
+background-repeat: no-repeat;
+margin: 0 auto;
+padding: 0;
 }
-.landing .border-right{
-  font-size: 32px;
-  color: #8a0305;
-  font-weight: 900;
+.hero h1 {
+font-size: 36px;
+color:  var(--bg-color);
 }
-.landing .border-right{
-  border-bottom: #8a0305 solid 20px;
+.hero .left {
+position: relative;
+top:150px;
+left: 50px;
 }
 /* end landing*/
 /*start home*/
