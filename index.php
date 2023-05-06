@@ -3,8 +3,8 @@ session_start();
 $pageTitle ='By&Sell';
 
 include('init.php');   
-    
-    // select all data depend of id
+include($temps."/hero.php");   
+    // select all items 
     $stmt = $conn->prepare('SELECT items.* , categories.Name AS Category_Name , users.Username AS Username FROM items INNER JOIN categories ON categories.Cat_ID = items.Cat_ID INNER JOIN users ON users.UserID = items.Member_ID  WHERE items.Approve = 1  ORDER BY Item_ID DESC');
 
     
@@ -13,82 +13,40 @@ include('init.php');
     // fetch data
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-   
-  if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if(isset($_POST['add_to_cart'])){
-        
-      $price =$_POST['price'];
-      $product =$_POST['itemid'];
-      $user = $_SESSION['ID'];
-
-      // check if item is in the database
-      $quantity =1;
-      
-      $productQantity = getAllData('*','shopping_cart','where Item_ID ='.$product,'','Item_ID','ASC','one');
-      $checkQuantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID', $product);
-      $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user);
-      //if items is there and new user
-      $checkUserQantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID ', $product,'AND UserID  <>'.$user);
-      
-      if ($checkUserQantity >0) {
-        // Insert the new item for the existing user
-        echo 'insert new user';
-        $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
-        $stmt->bindParam(":uID", $user);
-        $stmt->bindParam(":pID", $product);
-        $stmt->bindParam(":quantity", $quantity);
-        $stmt->bindParam(":price", $price);
-
-      
-        }else{
-
-          if($checkUser > 0 && $checkQuantity > 0 ){
-          // Update the quantity of the existing item
-          echo 'update quantity';
-          $quantity =$productQantity['quantity'] + 1;
-
-          $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
-
-          $stmt->bindParam(":pID", $product);
-          $stmt->bindParam(":quantity", $quantity);
-        
-
-          
-          }elseif ($checkUser == 1 && $checkQuantity == 0) {
-            // Insert the new item for the existing user
-            echo 'insert new user';
-            $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
-            $stmt->bindParam(":uID", $user);
-            $stmt->bindParam(":pID", $product);
-            $stmt->bindParam(":quantity", $quantity);
-            $stmt->bindParam(":price", $price);
-          }else{
-            // Insert the new user and item
-            echo 'insert else';
-                // the mean statement insert to db
-            $stmt = $conn->prepare(' INSERT INTO shopping_cart (UserID , Item_ID , quantity , Price) VALUES (:uID , :pID , :quantity , :price )');
-
-            $stmt->bindParam(":uID", $user);
-            $stmt->bindParam(":pID", $product);
-            $stmt->bindParam(":quantity", $quantity);
-            $stmt->bindParam(":price", $price);
-        }
-        echo "Item added to cart successfully!";
-
-      }
-      //end of check
-      $stmt->execute();
-      
-
-    }   
-  }
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  addToCarte($_POST['add_to_cart'],$_POST['price'],$_POST['itemid'],$_SESSION['ID']);
+}
 
 ?>
 
 <div class="container">
+  <div class="row category ">
+    <h1 class="text-center">
+      Categories
+    </h1>
+    <?php 
+    $categories = getAllData('*','categories','','','CAT_ID','ASC','all');
+     foreach($categories as $cat):
+    ?>
+    <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">  
+    <div class="d-flex flex-row ">
+          <div class="pe-1">
+            <h5 class="card-title"><?php echo $cat["Name"] ?></h5> 
+          </div>
+          <div class="pe-1 desc">
+            <p class="card-text"><?php echo $cat["Description"] ?></p>
+          </div>
+        </div>
+    </div>
 
-  <div class="row">
+    <?php endforeach ?>
+  </div>
+
+  <div class="row products">
+  <h1 class="text-center">
+      best Products
+    </h1>
     <?php    foreach($items as $item):?>
     <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
       <div class="card home-card mb-3">

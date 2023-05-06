@@ -34,5 +34,5 @@ if(!isset($noNavBar)){
 include($temps."/navbar.php");
  }
 
-include($temps."/hero.php");
+
  

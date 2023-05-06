@@ -1,23 +1,22 @@
 <?php
 
 
-function getAllData($fild, $table, $where = '' , $and = '' , $orderfield='' , $ordering = 'DESC', $fetch  = 'all' )
+function getAllData($fild, $table, $where = '', $and = '', $orderfield = '', $ordering = 'DESC', $fetch  = 'all')
 {
     global $conn;
-    
+
     $getall = $conn->prepare("SELECT $fild FROM $table  $where $and ORDER BY $orderfield $ordering ");
 
 
     $getall->execute();
 
-    if($fetch == 'all'){
-       $rows = $getall->fetchAll(); 
-    }else{
-        $rows = $getall->fetch(); 
- 
+    if ($fetch == 'all') {
+        $rows = $getall->fetchAll();
+    } else {
+        $rows = $getall->fetch();
     }
 
-    
+
 
     return $rows;
 }
@@ -37,7 +36,7 @@ function checkUserStatus($user)
 
     return $row;
 }
-function checkIfAlreadyUsed($from, $where, $value ,$and='')
+function checkIfAlreadyUsed($from, $where, $value, $and = '')
 {
 
     global $conn;
@@ -52,13 +51,78 @@ function checkIfAlreadyUsed($from, $where, $value ,$and='')
     return $rowCount;
 }
 
+function addToCarte($submit, $itemprice, $itemid, $userid)
+{
+    global $conn;
 
 
-function issetImage($path, $class = '', $alt = 'image') {
+    if (isset($submit)) {
+
+        $price = $itemprice;
+        $product = $itemid;
+        $user = $userid;
+
+        // check if item is in the database
+        $quantity = 1;
+
+        $productQantity = getAllData('*', 'shopping_cart', 'where Item_ID =' . $product, '', 'Item_ID', 'ASC', 'one');
+        $checkQuantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID', $product);
+        $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user);
+        //if items is there and new user
+        $checkUserQantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID ', $product, 'AND UserID  <>' . $user);
+
+        if ($checkUserQantity > 0) {
+            // Insert the new item for the existing user
+            echo 'insert new user';
+            $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
+            $stmt->bindParam(":uID", $user);
+            $stmt->bindParam(":pID", $product);
+            $stmt->bindParam(":quantity", $quantity);
+            $stmt->bindParam(":price", $price);
+        } else {
+
+            if ($checkUser > 0 && $checkQuantity > 0) {
+                // Update the quantity of the existing item
+                echo 'update quantity';
+                $quantity = $productQantity['quantity'] + 1;
+
+                $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
+
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+            } elseif ($checkUser == 1 && $checkQuantity == 0) {
+                // Insert the new item for the existing user
+                echo 'insert new user';
+                $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
+                $stmt->bindParam(":uID", $user);
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+                $stmt->bindParam(":price", $price);
+            } else {
+                // Insert the new user and item
+                echo 'insert else';
+                // the mean statement insert to db
+                $stmt = $conn->prepare(' INSERT INTO shopping_cart (UserID , Item_ID , quantity , Price) VALUES (:uID , :pID , :quantity , :price )');
+
+                $stmt->bindParam(":uID", $user);
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+                $stmt->bindParam(":price", $price);
+            }
+            echo "Item added to cart successfully!";
+        }
+        //end of check
+        $stmt->execute();
+    }
+}
+
+
+function issetImage($path, $class = '', $alt = 'image')
+{
     // Set up the class and alt attributes
     $myclass = $class != '' ? 'class="' . $class . '"' : '';
     $myalt = 'alt="' . $alt . '"';
-    
+
     if ($path) {
         // Build the HTML output with the correct attributes
         $output = '<img src="./layout/images/' . $path . '" ' . $myclass . ' ' . $myalt . '>';
@@ -66,7 +130,7 @@ function issetImage($path, $class = '', $alt = 'image') {
         // Use a default image if no path is provided
         $output = '<img src="./layout/images/random.jpg" ' . $myclass . ' ' . $myalt . '>';
     }
-    
+
     return $output;
 }
 
@@ -83,7 +147,7 @@ function getUserbyId($id)
     $getUser->execute();
 
     $user = $getUser->fetch();
-    
+
     return $user;
 }
 

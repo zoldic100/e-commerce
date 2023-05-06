@@ -17,44 +17,9 @@ endif;
 //add to cart
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-if(isset($_POST['add_to_cart'])){
-    
-  $price =$_POST['price'];
-  $product =$_POST['itemid'];
-  $user = $_SESSION['ID'];
-
-  // check if item is in the database
-  $quantity =1;
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  addToCarte($_POST['add_to_cart'],$_POST['price'],$_POST['itemid'],$_SESSION['ID']);
   
-  $productQantity = getAllData('quantity','shopping_cart','where Item_ID ='.$product,'','Item_ID','ASC','one');
-  $check = checkIfAlreadyUsed('shopping_cart', 'Item_ID', $product);
-  
-  
-
-  if ($check > 0){
-
-    $quantity =$productQantity['quantity'] + 1;
-
-  $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
-
-  $stmt->bindParam(":pID", $product);
-   $stmt->bindParam(":quantity", $quantity);
-
-
-  }else{
-      // the mean statement insert to db
-  $stmt = $conn->prepare(' INSERT INTO shopping_cart (UserID , Item_ID , quantity , Price) VALUES (:uID , :pID , :quantity , :price )');
-
-  $stmt->bindParam(":uID", $user);
-   $stmt->bindParam(":pID", $product);
-   $stmt->bindParam(":quantity", $quantity);
-   $stmt->bindParam(":price", $price);
-  }
-
-  //end of check
-   $stmt->execute();
-  
-
 }   
 }
 
@@ -107,7 +72,7 @@ if(isset($_GET['category'])&& isset($_GET['Cat_ID'])){
               <!-- add to carte -->
               </div>
               <div class="addToCart">
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>"method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF'].'?Cat_ID='.$_GET['Cat_ID'].'&category='.$_GET['category'] ?>"method="post">
 
                   <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
                   <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
