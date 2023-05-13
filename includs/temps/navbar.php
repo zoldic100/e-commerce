@@ -25,12 +25,23 @@ if (isset($_SESSION['user'])){
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- main ul -->
         <ul class="navbar-nav d-flex justify-content-between  w-100 mb-2 mb-lg-0">
-          <!-- home link -->
-          <div class="md d-flex  ">
+          <!-- midle nav -->
+          <div class="md d-flex align-items-center  ">
+            <!-- home link -->
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
           </li>
-          <!--end home link -->
+          <!--end homelink -->
+          <!--start About US link -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">About US</a>
+          </li>
+          <!--end About US link -->
+          <!--start Services link -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">Services</a>
+          </li>
+          <!--end Services link -->
           <!--start profile link -->
             
           <li class="nav-item">
@@ -47,7 +58,7 @@ if (isset($_SESSION['user'])){
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <?php  
 
-                  $categories = getAllData('*','categories','' , '' , 'Cat_ID' ,'ASC' );
+                  $categories = getAllData('*','categories','WHERE Parent = 0' , '' , 'Cat_ID' ,'ASC' );
 
                   foreach($categories as $cat){ ?>
                 
@@ -55,6 +66,18 @@ if (isset($_SESSION['user'])){
                     <a class="dropdown-item" href="categories.php?Cat_ID=<?php echo $cat["Cat_ID"] ?>&category=<?php echo $cat["Name"]?>">
                       <?php echo $cat["Name"]?>
                     </a>
+                    <ul>
+
+                      <?php  
+                        $catChildes = getAllData('*','categories','WHERE Parent ='.$cat["Cat_ID"] , '' , 'Cat_ID' ,'ASC' );
+                        foreach($catChildes as $catChilde){ ?>
+                        <li class="fs-6">               
+                          <a class="dropdown-item" href="categories.php?Cat_ID=<?php echo $catChilde["Cat_ID"] ?>&category=<?php echo $catChilde["Name"]?>">
+                          <?php echo $catChilde["Name"]?>
+                          </a> 
+                        </li>
+                        <?php  } ?>
+                    </ul>
                   </li>
                 
                 <?php  } ?>
@@ -62,7 +85,7 @@ if (isset($_SESSION['user'])){
           </li>
           <!--end  categories link -->
           </div>
-          <div class="ed d-flex   justify-content-between align-content-between">
+          <div class="ed d-flex   justify-content-between align-items-center">
           <!--user img link -->
 
           <li class="nav-item  margin-img ">
@@ -103,9 +126,21 @@ if (isset($_SESSION['user'])){
           <!--  end user link update logout  -->
           <!--  cart link   -->
 
-          <li class="nav-item cart">
-            <a href="shoppingCart.php" class="nav-link">
+          <li class="nav-item cart ">
+            
+            <a class="position-relative" href="shoppingCart.php?uId=<?= $_SESSION['ID'] ?>" class="nav-link">
               <i class="fa-solid fa-cart-shopping"></i> 
+              <?php 
+                $total = countQuantity($_SESSION['ID']);
+                if( $total != 0 ){
+              ?>
+              <span class="count position-absolute  start-50 translate-middle badge border border-light rounded-circle bg-danger p-1">
+                <strong>
+                  <?php  echo $total; ?>
+                </strong>
+              </span>
+              <?php } ?>
+
             </a>
           </li>
           <!--  cart link   -->

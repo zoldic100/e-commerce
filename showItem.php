@@ -1,9 +1,9 @@
 <?php
-session_start();
-$pageTitle = 'Login';
+    session_start();
+    $pageTitle = 'Login';
 
-include('init.php');
-if (isset($_SESSION['user'])) {
+    include('init.php');
+    if (isset($_SESSION['user'])) {
 
     // get the id from url
     $itemId = isset($_GET['item_ID']) && is_numeric($_GET['item_ID']) ? intval($_GET['item_ID']) : 0;
@@ -18,79 +18,111 @@ if (isset($_SESSION['user'])) {
 
     $count = $stmt->rowCount();
     if ($count > 0) {
+    
+        // add to cart
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if(isset($_POST['add_to_cart'])){
+                addToCarte($_POST['add_to_cart'],$_POST['price'],$_POST['itemid'],$_SESSION['ID']);
+            }
+        }
+
 
 ?>
 
 <div class="container">
-            <div class="row align-items-center showItem">
-                <div class="col-md-6 ">
-                    <img src="./layout/images/<?php echo $item["Image"] ?>" height="300px" class="card-img-top " alt="<?php echo $item["Name"] ?>">
-                </div>
+    <!-- show item details -->
+    <div class="row align-items-center showItem mt-5 mb-5">
+        
+        <div class="col-md-6 ">
+        <?php echo issetImage($item["Image"],'home-img',$item["Name"]); ?>
+        <!-- add to cart -->
+        <div class="addToCart">
+              <form action="<?php echo $_SERVER['PHP_SELF'].'?item_ID='.$_GET['item_ID'] ?> "method="post">
 
+                <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                <input type="submit" class="btn btn-danger mt-4 ms-4  rounded-pill" name="add_to_cart" value="Add to cart">
+              </form>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="clearfix mt-3 mb-3 w-50">
+                <span class="float-start badge rounded-pill bg-primary"><?php echo $item["Name"] ?></span>
+                <span class="float-end price-hp"><?php echo $item["Price"] ?>&dollar;</span>
+            </div>
+            <div class="clearfix mb-3 w-50">
+                <span class="float-start h3">Created by :</span>
+                <span class="float-end "><?php echo $item["Username"] ?></span>
+            </div>
+            <div class="clearfix mb-3 w-50">
+                <span class="float-start h3">Category :</span>
+                <span class="float-end "><a href="categories.php?Cat_ID=<?php echo $item["Cat_ID"] ?>&category=<?php echo $item["Category_Name"] ?>"><?php echo $item["Category_Name"] ?></a></span>
+            </div>
+            <div class="clearfix mb-3 w-50">
+                <span class="float-start h3">Description: </span>
+                <span class="float-end "><?php echo $item["Description"] ?></span>
+            </div>
+            
+
+        </div>
+
+    </div>
+    <!-- end show item details -->
+
+    <div class="row mt-3">
+        <?php if (isset($_SESSION['user'])) :?>
+
+            <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF'] . '?item_ID=' . $item["Item_ID"] ?>" method="POST">
                 <div class="col-md-6">
-                    <div class="clearfix mt-3 mb-3 w-50">
-                        <span class="float-start badge rounded-pill bg-primary"><?php echo $item["Name"] ?></span>
-                        <span class="float-end price-hp"><?php echo $item["Price"] ?>&dollar;</span>
+                    <div class="form-group">
+                        <label for="comment" class="mr-2 h5">Write a comment:</label>
+                        <textarea class="form-control mr-2" name="comment" id="comment" placeholder="Enter your comment"></textarea>
                     </div>
-                    <div class="clearfix mb-3 w-50">
-                        <span class="float-start h3">created by :</span>
-                        <span class="float-end "><?php echo $item["Username"] ?></span>
-                    </div>
-                    <div class="clearfix mb-3 w-50">
-                        <span class="float-start h3">Category :</span>
-                        <span class="float-end "><a href="categories.php?Cat_ID=<?php echo $item["Cat_ID"] ?>&category=<?php echo $item["Category_Name"] ?>"><?php echo $item["Category_Name"] ?></a></span>
-                    </div>
-                    <h5 class="card-title">Description<?php echo $item["Description"] ?></h5>
-
+                    <input type="submit" value="Submit" name="submit" class="btn btn-primary mt-2">
                 </div>
+            </form>
+        <?php else :  ?>
 
-            </div>
-            <div class="row mt-3">
-                <?php if (isset($_SESSION['user'])) :
-                ?>
+        <div class="col-md-6">
+            <span>
+                <a href="./login.php">Login</a>
+                OR 
+                <a href="./sign_up.php">Sing Up</a>
+                Write a comment
+            </span>
 
-                    <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF'] . '?item_ID=' . $item["Item_ID"] ?>" method="POST">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="comment" class="mr-2 h5">Write a comment:</label>
-                                <textarea class="form-control mr-2" name="comment" id="comment" placeholder="Enter your comment"></textarea>
-                            </div>
-                            <input type="submit" value="Submit" name="submit" class="btn btn-primary mt-2">
-                        </div>
-                    </form>
-                <?php else :  ?>
-                    <div class="col-md-6">
-                        <span><a href="./login.php">Login</a>OR <a href="./sign_up.php">Sing Up</a>Write a comment</span>
-                    </div>
-                <?php endif;
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    if (isset($_POST['submit'])) {
+        </div>
+        <?php 
+            endif;
 
-                        $com = strip_tags($_POST['comment']);
-                        $Item_id = $item['Item_ID'];
-                        $uID = $_SESSION['ID'];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['submit'])) {
 
-                        $stmt = $conn->prepare("INSERT INTO comments (Comment, CMT_date, Status, Item_ID, Member_ID) VALUES (:comment , now(), 0, :itemid, :memberid) ");
+                $com = strip_tags($_POST['comment']);
+                $Item_id = $item['Item_ID'];
+                $uID = $_SESSION['ID'];
 
-                        $stmt->bindParam(':comment', $com);
-                        $stmt->bindParam(':itemid', $Item_id);
-                        $stmt->bindParam(':memberid', $uID);
-                        $stmt->execute();
+                $stmt = $conn->prepare("INSERT INTO comments (Comment, CMT_date, Status, Item_ID, Member_ID) VALUES (:comment , now(), 0, :itemid, :memberid) ");
+
+                $stmt->bindParam(':comment', $com);
+                $stmt->bindParam(':itemid', $Item_id);
+                $stmt->bindParam(':memberid', $uID);
+                $stmt->execute();
 
 
-                        $count = $stmt->rowCount();
+                $count = $stmt->rowCount();
 
-                        if ($count > 0) {
-                            echo '<div id="success-alert" class="alert alert-success">Comment added</div>';
-                        }
-                    }
+                if ($count > 0) {
+                    echo '<div id="success-alert" class="alert alert-success">Comment added</div>';
                 }
-                ?>
-            </div>
-            
-                
-                
-            
+            }
+        }
+        ?>
+    </div>
+                 
     <div class="container mt-4">
         <h2>Comments</h2>
             <?php
@@ -129,12 +161,7 @@ if (isset($_SESSION['user'])) {
                 ?>
     </div>
 </div>
-
-
-
-
-
-
+<!-- end container -->
 
 
 <?php

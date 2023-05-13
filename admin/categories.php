@@ -101,9 +101,8 @@ if (isset($_SESSION['Username'])) {
     } elseif ($do == 'Add') {  ?>
         <div class="container">
           <h1 class="text-center"> Add New Categories</h1>
-        
 
-            <form action="?do=Insert" method="post" class="updateForm">
+            <form action="?do=Insert" method="post" class="updateForm" enctype="multipart/form-data">
 
                 <!-- start name -->
                 <div class=" mb-3 row">
@@ -121,6 +120,14 @@ if (isset($_SESSION['Username'])) {
                     </div>
                 </div>
                 <!-- end description  -->
+                <!-- start Image -->
+                <div class=" mb-3 row">
+                    <label for="Image" class="col-sm-2 col-form-label">Image </label>
+                    <div class="form-group col-sm-10 col-lg-6  ">
+                        <input type="file" name="img" class="form-control" id="Image" autocomplete="off" placeholder="Image">
+                    </div>
+                </div>
+                <!-- end Image  -->
                 <!-- start parent -->
                 <div class=" mb-3 row">
                     <label for="parent" class="col-sm-2 col-form-label">Parent </label>
@@ -215,6 +222,18 @@ if (isset($_SESSION['Username'])) {
             echo '<h1 class="text-center alert  alert-success">Welcome</h1>';
             echo '<h1 class="text-center"> Insert Categorie</h1>';
 
+            //upload file
+            
+            $imgName = $_FILES['img']['name'];
+            $imgSize = $_FILES['img']['size'];
+            $imgTmp = $_FILES['img']['tmp_name'];
+
+            //list of allowed file
+
+            $img_exe = ['jpeg','jpg','png'];
+
+            $extension = pathinfo($imgName, PATHINFO_EXTENSION);
+
 
             $name = $_POST['name'];
             $description = $_POST['description'];
@@ -223,8 +242,24 @@ if (isset($_SESSION['Username'])) {
             $visibility = $_POST['visibility'];
             $commenting = $_POST['commenting'];
             $ads = $_POST['ads'];
+            
+            $errors = [];
+            if (! empty($imgName ) && ! in_array($extension , $img_exe)) {
+                $errors[] = ' Extention is not Allowed ';
+            }
+            if (empty($imgName ) ) {
+                $errors[] = ' Image is required ';
+            }
+            if ($imgSize > 4194304 ) {
+                $errors[] = ' Avatar can\'t be larger than 4 mb';
+            }
     
-            if(!empty($name)){
+            if(!empty($name) && empty($errors)){
+                
+                //add location to the image 
+                $image = rand(0,100000000). '_'.$imgName;
+
+                move_uploaded_file($imgTmp,'../layout/images/catImg/'.$image);
                 //check if categorie existe
 
                 $check = checkItem('Name', 'categories', $name);
@@ -237,14 +272,15 @@ if (isset($_SESSION['Username'])) {
                     
 
                         $stmt = $conn->prepare("INSERT INTO `categories` 
-                                            ( `Parent`,`Name`, `Description`, `Ordering`, `Visibility`,
+                                            ( `Parent`,`Name`, `Description`, `Image`, `Ordering`, `Visibility`,
                                                 `Allow_Comment`, `Allow_Ads`) 
-                                                VALUES (:parent ,:name, :description, :ordering,:visibility, :commenting,:ads)");
+                                                VALUES (:parent ,:name, :description, :image, :ordering,:visibility, :commenting,:ads)");
                         
 
                         $stmt->bindParam(':parent', $parent);
                         $stmt->bindParam(':name', $name);
                         $stmt->bindParam(':description', $description);
+                        $stmt->bindParam(':image', $image);
                         $stmt->bindParam(':ordering', $ordering);
                         $stmt->bindParam(':visibility', $visibility);
                         $stmt->bindParam(':commenting', $commenting);

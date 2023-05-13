@@ -1,0 +1,115 @@
+function addToCarte($submit, $itemprice, $itemid, $userid)
+{
+    global $conn;
+
+
+    if (isset($submit)) {
+
+        $price = $itemprice;
+        $product = $itemid;
+        $user = $userid;
+
+        // check if item is in the database
+        $quantity = 1;
+
+        $productQantity = getAllData('*', 'shopping_cart', 'where Item_ID =' . $product, '', 'Item_ID', 'ASC', 'one');
+        $checkQuantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID', $product);
+        $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user);
+        //if items is there and new user
+        $checkUserQantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID ', $product.' <> Item_ID', 'AND UserID  <>' . $user);
+
+        if ($checkUserQantity > 0) {
+            // Insert the new item for the existing user
+            echo 'insert new user';
+            $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
+            $stmt->bindParam(":uID", $user);
+            $stmt->bindParam(":pID", $product);
+            $stmt->bindParam(":quantity", $quantity);
+            $stmt->bindParam(":price", $price);
+        } else {
+
+            if ($checkUser > 0 && $checkQuantity > 0) {
+                // Update the quantity of the existing item
+                echo 'update quantity';
+                $quantity = $productQantity['quantity'] + 1;
+
+                $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
+
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+            } elseif ($checkUser == 1 && $checkQuantity == 0) {
+                // Insert the new item for the existing user
+                echo 'insert new user else if';
+                $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
+                $stmt->bindParam(":uID", $user);
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+                $stmt->bindParam(":price", $price);
+            } else {
+                // Insert the new user and item
+                echo 'insert else';
+                // the mean statement insert to db
+                $stmt = $conn->prepare(' INSERT INTO shopping_cart (UserID , Item_ID , quantity , Price) VALUES (:uID , :pID , :quantity , :price )');
+
+                $stmt->bindParam(":uID", $user);
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+                $stmt->bindParam(":price", $price);
+            }
+            echo "Item added to cart successfully!";
+        }
+        //end of check
+        $stmt->execute();
+    }
+}
+
+css ainimation 
+@keyframes fade-h1 {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-p {
+  0% {
+    font-size: 1.5rem;
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    font-size: 1.4rem;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-shop {
+  0% {
+    margin: 30px;
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    margin: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-sell {
+  0% {
+    margin: 30px;
+    opacity: 0;
+    transform: rotate(-90deg);
+  }
+  100% {
+    margin: 0;
+    opacity: 1;
+    transform: rotate(0);
+  }
+  }

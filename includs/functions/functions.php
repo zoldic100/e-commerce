@@ -63,59 +63,62 @@ function addToCarte($submit, $itemprice, $itemid, $userid)
         $user = $userid;
 
         // check if item is in the database
-        $quantity = 1;
+        $quantity = 1;  //function checkIfAlreadyUsed($from, $where, $value, $and = '')
 
         $productQantity = getAllData('*', 'shopping_cart', 'where Item_ID =' . $product, '', 'Item_ID', 'ASC', 'one');
-        $checkQuantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID', $product);
-        $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user);
-        //if items is there and new user
-        $checkUserQantity = checkIfAlreadyUsed('shopping_cart', 'Item_ID ', $product, 'AND UserID  <>' . $user);
 
-        if ($checkUserQantity > 0) {
-            // Insert the new item for the existing user
-            echo 'insert new user';
-            $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
-            $stmt->bindParam(":uID", $user);
-            $stmt->bindParam(":pID", $product);
-            $stmt->bindParam(":quantity", $quantity);
-            $stmt->bindParam(":price", $price);
-        } else {
-
-            if ($checkUser > 0 && $checkQuantity > 0) {
-                // Update the quantity of the existing item
-                echo 'update quantity';
+        $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user, 'AND Item_ID = '.$product);
+        
+        if ($checkUser > 0 ) {
+                echo 'Update the quantity of the existing item  :';
+                echo '<br> u'.$checkUser;
                 $quantity = $productQantity['quantity'] + 1;
 
                 $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
 
                 $stmt->bindParam(":pID", $product);
                 $stmt->bindParam(":quantity", $quantity);
-            } elseif ($checkUser == 1 && $checkQuantity == 0) {
-                // Insert the new item for the existing user
-                echo 'insert new user';
+
+            } else {
+                echo 'insert';  
+                echo '<br> u'.$checkUser;
                 $stmt = $conn->prepare('INSERT INTO shopping_cart (UserID, Item_ID, quantity, Price) VALUES (:uID, :pID, :quantity, :price)');
                 $stmt->bindParam(":uID", $user);
                 $stmt->bindParam(":pID", $product);
                 $stmt->bindParam(":quantity", $quantity);
                 $stmt->bindParam(":price", $price);
-            } else {
-                // Insert the new user and item
-                echo 'insert else';
-                // the mean statement insert to db
-                $stmt = $conn->prepare(' INSERT INTO shopping_cart (UserID , Item_ID , quantity , Price) VALUES (:uID , :pID , :quantity , :price )');
-
-                $stmt->bindParam(":uID", $user);
-                $stmt->bindParam(":pID", $product);
-                $stmt->bindParam(":quantity", $quantity);
-                $stmt->bindParam(":price", $price);
             }
-            echo "Item added to cart successfully!";
-        }
-        //end of check
         $stmt->execute();
     }
 }
+function countPrice($userid){
 
+    global $conn;
+
+    $stmtCount = $conn->prepare("SELECT SUM(Price * quantity) as Total  FROM shopping_cart WHERE UserID = :uid");
+    
+    $stmtCount->bindParam(':uid',$userid);
+
+    $stmtCount->execute();
+
+    $total = $stmtCount->fetch();
+
+    return $total['Total'];
+}
+function countQuantity($userid){
+
+    global $conn;
+
+    $CountQ =  $conn->prepare('SELECT SUM(quantity) as Total FROM shopping_cart WHERE UserID = :userid');
+    
+    $CountQ->bindParam(':userid',$userid);
+
+    $CountQ->execute();
+
+    $total = $CountQ->fetch();
+
+    return $total['Total'];
+}
 
 function issetImage($path, $class = '', $alt = 'image')
 {

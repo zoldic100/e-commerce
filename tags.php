@@ -1,31 +1,29 @@
 <?php
 
-$pageTitle = 'Categories';
-session_start();
+  $pageTitle = 'Categories';
+  session_start();
 
-include('init.php');
+  include('init.php');
 
-if(isset($_SESSION['user'])){
-$userStatus = checkUserStatus($_SESSION['user']);
-if($userStatus == 1 ){
-  echo "you need to be activated by admin";
-}
-}
-//add to cart 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if(isset($_SESSION['user'])){
+  $userStatus = checkUserStatus($_SESSION['user']);
+  if($userStatus == 1 ){
+    echo "you need to be activated by admin";
+  }
+  }
+  //add to cart 
+  if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-  addToCarte($_POST['add_to_cart'],$_POST['price'],$_POST['itemid'],$_SESSION['ID']);
-}  
-}
-if(isset($_GET['name'])){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    addToCarte($_POST['add_to_cart'],$_POST['price'],$_POST['itemid'],$_SESSION['ID']);
+  }  
+  }
+
+  if(isset($_GET['name'])){
 ?>
 
 <div class="container">
   <h1 class="text-center">Item by <?php echo $_GET['name']; ?></h1>
-
-
-
   <div class="row">
     <div id="product-list"></div>
   </div>
@@ -33,18 +31,21 @@ if(isset($_GET['name'])){
   <div class="row">
     <?php
 
-            // get the id from url
-    $tag = isset($_GET['name'])  ?$_GET['name'] : 'discount';
-    $items = getAllData('*','items','WHERE Tags like "%'.$tag.'%"' , '' , 'Item_ID' , 'ASC');
+      // get the id from url
+      $tag = isset($_GET['name'])  ?$_GET['name'] : 'discount';
+      $items = getAllData('*','items','WHERE Tags like "%'.$tag.'%"' , '' , 'Item_ID' , 'ASC');
 
-    foreach ($items as $item): ?>
+      foreach ($items as $item): 
+    ?>
 
-      <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
+    <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
       <div class="card home-card mb-3">
-
-        <?php echo issetImage($item["Image"],'home-img','Product'); ?>
+        <a href="./showItem.php?item_ID=<?= $item["Item_ID"] ?>">
+          <?php echo issetImage($item["Image"],'home-img','Product'); ?>
+        </a>
         
-        <div class="card-body">
+      <div class="card-body">
+
         <div class="d-flex flex-row bd-highlight align-items-center">
           <div class="pe-1 bd-highlight">
             <h5 class="card-title"><?php echo $item["Name"] ?></h5>
@@ -53,9 +54,9 @@ if(isset($_GET['name'])){
             <p class="card-text"><?php echo $item["Description"] ?></p>
           </div>
         </div>
+
           <div class="d-flex justify-content-between align-items-center">
-          <p class="price"> <?php echo $item["Price"] ?>.00$</p>
-          
+            <p class="price"> <?php echo $item["Price"] ?>.00$</p>
             <h6 class="card-text text-muted"> <?php echo $item["Date"] ?></h6>
           </div>
 
@@ -75,9 +76,14 @@ if(isset($_GET['name'])){
                   <input type="submit" class="btn  rounded-pill" name="add_to_cart" value="Add to cart">
                 </form>
               </div>
+
             </div>
-          <?php }?>
-          <?php if (!empty($item["Tags"])){ ?>
+
+           
+          <?php 
+            } // if approve
+            if (!empty($item["Tags"])){ 
+          ?>
             <div class=" card-text text-muted">
               <?php
                   tags:
@@ -87,19 +93,25 @@ if(isset($_GET['name'])){
                     echo '<a href="tags.php?name='.strtolower($tag),'">'.$tag.'</a> |';
                   }
                 ?>
-              </div>
+            </div>
           <?php } ?>
         </div> 
+        <!-- end card body -->
 
       </div>
+      <!-- card home -->
     </div>
+  <!-- end col -->
     
-    <?php  endforeach; ?>
+  <?php  endforeach; ?>
+  <!-- end tag loop -->
   </div>
+  <!-- end row -->
 </div>
+<!-- end container -->
 <?php
 }else{
-  echo '<div class="alert alert-danger">You need choose specific category</div>';
+  echo '<div class="alert alert-danger">You need choose specific tag</div>';
 
 }
 
