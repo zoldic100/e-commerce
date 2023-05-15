@@ -1,9 +1,9 @@
 
 </div>
 
-<div class="ag-maecenas-block">
+<div class="ag-maecenas-block ">
   <div class="ag-maecenas_title">
-    <div class="ag-format-container">
+    <div class="ag-format-container bubbles">
       B&S
     </div>
     <div class="ag-format-container h2">

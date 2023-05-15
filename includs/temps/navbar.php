@@ -7,7 +7,7 @@ if (isset($_SESSION['user'])){
 ?>
 
 <div class="header">
-  <nav class="navbar navbar-expand-lg " >
+  <nav class="navbar navbar-expand-lg sticky fixed-top r-nav" >
     <div class="container ">
       <!-- logo -->
       <a class="navbar-brand" href="index.php">
@@ -159,7 +159,7 @@ if (isset($_SESSION['user'])){
 
   }else{?> 
     <!-- not login user -->
-    <nav class="navbar navbar-expand-lg  ">
+    <nav class="navbar navbar-expand-lg sticky fixed-top r-nav ">
       <div class="container">
         <a class="navbar-brand" href="index.php"><?php echo lang('HOME')?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,13 +167,68 @@ if (isset($_SESSION['user'])){
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav d-flex justify-content-between  w-100 mb-2 mb-lg-0">
+          <div class="md d-flex align-items-center  ">
+            <!-- home link -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          </li>
+          <!--end homelink -->
+          <!--start About US link -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">About US</a>
+          </li>
+          <!--end About US link -->
+          <!--start Services link -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.php">Services</a>
+          </li>
+          <!--end Services link -->
+
+          <!--  categories link -->
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="categories.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <?php echo lang('CATEGORIES')?>
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php  
+
+                  $categories = getAllData('*','categories','WHERE Parent = 0' , '' , 'Cat_ID' ,'ASC' );
+
+                  foreach($categories as $cat){ ?>
+                
+                  <li>
+                    <a class="dropdown-item" href="categories.php?Cat_ID=<?php echo $cat["Cat_ID"] ?>&category=<?php echo $cat["Name"]?>">
+                      <?php echo $cat["Name"]?>
+                    </a>
+                    <ul>
+
+                      <?php  
+                        $catChildes = getAllData('*','categories','WHERE Parent ='.$cat["Cat_ID"] , '' , 'Cat_ID' ,'ASC' );
+                        foreach($catChildes as $catChilde){ ?>
+                        <li class="fs-6">               
+                          <a class="dropdown-item" href="categories.php?Cat_ID=<?php echo $catChilde["Cat_ID"] ?>&category=<?php echo $catChilde["Name"]?>">
+                          <?php echo $catChilde["Name"]?>
+                          </a> 
+                        </li>
+                        <?php  } ?>
+                    </ul>
+                  </li>
+                
+                <?php  } ?>
+              </ul>
+          </li>
+          <!--end  categories link -->
+          </div>
+          <div class="ed d-flex   justify-content-between align-items-center">
             <li class="nav-item">
               <a class="nav-link " href="login.php">Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="signup.php">Sign up</a>
             </li>
+          </div>
           </ul>  
         </div>
       </div>

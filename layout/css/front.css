@@ -1,6 +1,6 @@
 :root {
   --bg-color:#FFF;
-  --red-color:#FF4747;
+  --red-color:#536779;
   --heading-color-blue:blue;
 }
 @font-face {
@@ -62,7 +62,7 @@ h1{
   .navbar {
     background-color: var(--bg-color) !important;
     height: fit-content;
-    border-bottom: 1px gray solid;
+    
   }
 
    .navbar .md{
@@ -87,6 +87,53 @@ h1{
   top: 1;
   font-size: 12px;
   }
+  /*navigation*/
+nav.r-nav{
+    background:var(--red-color) !important;
+    padding: 20px 0;
+    transition: .5s all;
+}
+nav .navbar-brand{
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fffdfc;
+  text-shadow: 2px 2px 0 #000;
+
+}
+nav .navbar-nav li a,
+.navbar .cart svg{
+    color: rgba(255, 255, 255, 0.922) !important;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+}
+
+nav .navbar-nav li {
+  margin-left: 15px;
+
+
+}
+
+/*sticky*/
+nav.r-nav.stickyadd{
+    background-color: #fff!important;
+    padding: 0;
+    box-shadow: 0 1px 8px 3px rgb(255, 254, 254 ,0.5);
+    transition: .5s all ease-in-out;
+    opacity: 1;
+    height: 12vh;
+}
+nav.stickyadd .navbar-brand {
+    color: var(--red-color);
+   font-size: 60px;
+   transition: .5s all;
+   
+
+}
+nav.stickyadd .navbar-nav .nav-link,
+nav.stickyadd  .cart svg{
+    color: #000 !important;
+}
 
 /* end nav-bar*/
 /* end hero*/
@@ -127,7 +174,30 @@ margin: 15px 0px;
   color: var(--red-color);
   
 }
+/*buble*/
 
+.bubbles {
+  display: inline-block;
+  font-family: arial;
+  position: relative;
+  }
+  
+  .bubbles  {
+  position: relative;
+  margin: 1em 0 0;
+  font-family: 'Luckiest Guy', cursive;
+  color: #fff;
+  z-index: 2;
+  }
+  
+  .individual-bubble {
+  position: absolute;
+  border-radius: 100%;
+  bottom: 10px;
+  background-color: #fff;
+  z-index: 1;
+  }
+/*buble*/
 
 
 
