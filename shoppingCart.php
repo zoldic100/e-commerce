@@ -39,8 +39,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $items = $stmt->fetchAll();
     if(!empty($items)):
 ?>
-
-<div class="container">
+</div>
+<div class="container ">
   <h1 class="text-center">Shopping card</h1>
 
   <div class="row">
@@ -57,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
       <div class="card home-card mb-3">
      
-        <a href="./showItem.php?item_ID=<?= $item["Item_ID"] ?>">     
+      <a href="./showItem.php?item=<?php echo $item["Iname"] ?>&item_ID=<?= $item["Item_ID"] ?>">
           <?php echo issetImage($item["Image"],'home-img','Product'); ?>
         </a>
 
@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <div class="d-flex flex-row bd-highlight align-items-center">
           <div class="pe-1 bd-highlight">
             <a href="./showItem.php?item_ID=<?php echo $item["Item_ID"] ?>">
-              <h5 class="card-title"><?php echo $item["Uname"] ?></h5>
+              <h5 class="card-title"><?php echo $item["Iname"] ?></h5>
             </a>
           </div>
 

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $pageTitle = 'Login';
+    $pageTitle = $_GET['item'];
 
     include('init.php');
     if (isset($_SESSION['user'])) {
@@ -31,39 +31,39 @@
 
 <div class="container">
     <!-- show item details -->
-    <div class="row align-items-center showItem mt-5 mb-5">
+    <div class="row align-items-start showItem mt-5 mb-5">
         
-        <div class="col-md-6 ">
-        <?php echo issetImage($item["Image"],'home-img',$item["Name"]); ?>
+        <div class="col-md-6 text-center">
+        <?php echo issetImage($item["Image"],'item-image',$item["Name"]); ?>
         <!-- add to cart -->
         <div class="addToCart">
-              <form action="<?php echo $_SERVER['PHP_SELF'].'?item_ID='.$_GET['item_ID'] ?> "method="post">
+              <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
 
                 <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
                 <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
                 <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
-                <input type="submit" class="btn btn-danger mt-4 ms-4  rounded-pill" name="add_to_cart" value="Add to cart">
+                <input type="submit" class="btn btn-danger mt-4 ms-4  rounded-pill w-100" name="add_to_cart" value="Add to cart">
               </form>
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 info">
 
-            <div class="clearfix mt-3 mb-3 w-50">
-                <span class="float-start badge rounded-pill bg-primary"><?php echo $item["Name"] ?></span>
-                <span class="float-end price-hp"><?php echo $item["Price"] ?>&dollar;</span>
+            <div class=" mt-3 mb-3 pb-3">
+                <span class=" badge rounded-pill bg-primary"><?php echo $item["Name"] ?></span>
+                <span class=" price-hp"><?php echo $item["Price"] ?>&dollar;</span>
             </div>
-            <div class="clearfix mb-3 w-50">
-                <span class="float-start h3">Created by :</span>
-                <span class="float-end "><?php echo $item["Username"] ?></span>
+            <div class="pb-3">
+                <span class="h3 ">Created by :</span>
+                <span class=" "><?php echo $item["Username"] ?></span>
             </div>
-            <div class="clearfix mb-3 w-50">
-                <span class="float-start h3">Category :</span>
-                <span class="float-end "><a href="categories.php?Cat_ID=<?php echo $item["Cat_ID"] ?>&category=<?php echo $item["Category_Name"] ?>"><?php echo $item["Category_Name"] ?></a></span>
+            <div class="pb-3">
+                <span class="h3 ">Category :</span>
+                <span class=" "><a href="categories.php?Cat_ID=<?php echo $item["Cat_ID"] ?>&category=<?php echo $item["Category_Name"] ?>"><?php echo $item["Category_Name"] ?></a></span>
             </div>
-            <div class="clearfix mb-3 w-50">
-                <span class="float-start h3">Description: </span>
-                <span class="float-end "><?php echo $item["Description"] ?></span>
+            <div class=" mb-3 ">
+                <span class=" h3 ">Description: </span>
+                <span class=""><?php echo $item["Description"] ?></span>
             </div>
             
 
@@ -75,7 +75,7 @@
     <div class="row mt-3">
         <?php if (isset($_SESSION['user'])) :?>
 
-            <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF'] . '?item_ID=' . $item["Item_ID"] ?>" method="POST">
+            <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="comment" class="mr-2 h5">Write a comment:</label>

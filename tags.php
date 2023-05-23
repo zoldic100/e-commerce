@@ -40,7 +40,7 @@
 
     <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
       <div class="card home-card mb-3">
-        <a href="./showItem.php?item_ID=<?= $item["Item_ID"] ?>">
+      <a href="./showItem.php?item=<?php echo $item["Name"] ?>&item_ID=<?= $item["Item_ID"] ?>">
           <?php echo issetImage($item["Image"],'home-img','Product'); ?>
         </a>
         

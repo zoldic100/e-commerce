@@ -1,22 +1,22 @@
 
 </div>
-
-<div class="ag-maecenas-block ">
-  <div class="ag-maecenas_title">
+<!-- ag-maecenas-block -->
+<div class="ag-maecenas_title">
+  <div class="container">
     <div class="ag-format-container bubbles">
-      B&S
+     <div class="logo">B&S</div> 
     </div>
-    <div class="ag-format-container h2">
-    Find Everything You Need In One Place
-    </div>
-    <div class="ag-format-container  hero-btns">
-      <button class="btn shop btn-light rounded-pill me-3">Shop Now</button>
+    <div class="ag-format-container  h2">
+    <p> Find Everything You Need  In One Place</p>
+    <div class="hero-btns">
+      <button class="btn shop btn-light rounded-pill ">Shop Now</button>
       <a href="createItem.php" class="btn sell btn-light rounded-pill">Sell Now</a>
     </div>
+    </div>
+
   </div>
   
 
 </div>
 
 
-</div>

@@ -1,3 +1,4 @@
+the background-image will be removed it disppear when size under 992
 function addToCarte($submit, $itemprice, $itemid, $userid)
 {
     global $conn;

@@ -54,38 +54,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
-<div class="container">
-    <div class="row">
+<div class="container-fluid log-sign">
+<div class="container ">
+    <div class="row d-flex align-items-center justify-content-center ">
         
-        <div class="col-md-6 d-flex justify-content-center align-items-center">
-            <div class="row">
-                <div class="col-md-6 w-100 ">
-                    <h2 class="display-1 fw-bold text-lg-start text-md-center" >Welcome</h2>
-                    <p class="display-6">Bye And Sell</p>
-                </div>
-            </div>
+        <div class="col-md-6  " id="login-img">
+            <div></div>
+            <!-- <img src="layout/site-img/login_img.png" alt="login"> -->
+          
         </div>
-        <div class="col-md-6">
-            <div class="login">
+        <div class="col-md-6 ">
+        <h1 class="text-center" id="login" >login</h1>
+            <div class="login ">
                 
-                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="POST">
+                
+                    <form class="w-100" action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="POST">
                         <!-- Username input -->
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="Username">Username</label>
-                            <input type="text" name="username" id="Username" class="form-control" />
+                        <div class="form-outline mb-4 ">
+                            <label class="form-label " for="Username">Username</label>
+                            <input type="text" name="username" id="Username" class="form-control" placeholder = "Enter your Username"/>
 
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
                             <label class="form-label" for="password">Password</label>
-                            <input type="password" name="password" id="password" autocomplete="new-password" class="form-control" />
+                            <input type="password" name="password" id="password" autocomplete="new-password" class="form-control" placeholder = "Enter your Password"  />
 
                         </div>
                         
-                        <div class="form-outline mb-4">
+                        <div class="form-outline mb-4 ">
                             <?php if(isset($message)){?>
-                            <span class="text-center alert alert-danger">
+                            <span class="text-center alert alert-danger w-100">
                                 <?php echo $message; };?>
                             </span>
                         </div>
@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
+</div>
 </div>
 <?php
 include($temps . "/footer.php");
