@@ -3,8 +3,7 @@
     $pageTitle = $_GET['item'];
 
     include('init.php');
-    if (isset($_SESSION['user'])) {
-
+    
     // get the id from url
     $itemId = isset($_GET['item_ID']) && is_numeric($_GET['item_ID']) ? intval($_GET['item_ID']) : 0;
     // select all data depend of id
@@ -36,6 +35,7 @@
         <div class="col-md-6 text-center">
         <?php echo issetImage($item["Image"],'item-image',$item["Name"]); ?>
         <!-- add to cart -->
+        <?php if (isset($_SESSION['user'])) { ?>
         <div class="addToCart">
               <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
 
@@ -45,6 +45,7 @@
                 <input type="submit" class="btn btn-danger mt-4 ms-4  rounded-pill w-100" name="add_to_cart" value="Add to cart">
               </form>
             </div>
+            <?php } ?>
         </div>
 
         <div class="col-md-6 info">
@@ -169,10 +170,7 @@
         $msg = 'there is no sush id';
         redirectToHome($msg);
     }
-} else {
-    header('location:login.php');
-    exit();
-}
+
 
 
 

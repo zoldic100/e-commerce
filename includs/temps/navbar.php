@@ -162,7 +162,7 @@ if (isset($_SESSION['user'])){
 
   }else{?> 
     <!-- not login user -->
-    <nav class="navbar navbar-expand-lg sticky fixed-top r-nav ">
+    <nav class="navbar navbar-expand-lg sticky <?php  if(isset($fixed_top)){ echo 'fixed-top'; } ?> r-nav" >
       <div class="container">
         <a class="navbar-brand" href="index.php">B&S</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
