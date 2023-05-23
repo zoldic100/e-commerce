@@ -29,6 +29,12 @@ h1{
     font:3rem 'Heavitas', sans-serif;
     margin: 40px 0;
   }
+h2{
+  
+    color:#240138;
+    font:2rem 'Heavitas', sans-serif;
+    
+  }
 .form-outline{
   position: relative;
 
@@ -576,10 +582,66 @@ color: #f4f4f4;
 
 
 /* end landing*/
+/* start aboutUsPage */
+.aboutUsPage{
+  background-image: url('../site-img/team.png');
+  height: 80vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; 
+  margin-top:42px ;
+}
+.our-work-img{
+  background-image: url('../site-img/our-work.png');
+  height: 40vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; 
+  margin:42px 0px 20px 30px;
+}
+.the-team-img{
+  background-image: url('../site-img/the-team.png');
+  height: 70vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; 
+  margin:42px 0px 20px 30px;
+}
+.abus h1{
+  font-stretch: extra-expanded;
+}
+.our-team span{
+  font-family: 'Pacifico', 'open-sans';
+  color: #fff !important;
+  border-radius: 50%;
+  font-size: 5rem;
+  background-color: var(--mean-color);
+  padding: 1.5rem;
+}
+
+.quote svg{
+  font-family: 'Pacifico', 'open-sans';
+  font-size: 2rem;
+  font-weight: bolder;
+  color:#000
+}
+.our-work p{
+  font-family: 'Pacifico', 'open-sans';
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #000;
+}
+.our-work small{
+  font-family: 'Roboto', 'open-sans';
+  font-size: 1rem;
+  font-weight: lighter;
+  color:#333
+}
+/* end aboutUsPage */
 /*start home*/
 .service{
-  background-color: #f5f5f5;
-  padding: 4.5rem 0;
+  background-color: #fff;
+  padding: 2.5rem 0 4rem;
 }
 .service h5{
 font-weight: bolder;
@@ -624,10 +686,10 @@ section{
   border: none;
 }
 .About .aboutUs-text{
-  background-color: #eedaf3;
+  background-color: #f4f4f4;
   padding: 10px;
   border-radius: 10px;
-  color: var(--mean-color);
+  color: #240138;
   font-size: 1rem;
   font:'Heavitas', sans-serif;
 
@@ -684,6 +746,20 @@ font-size: 0.7rem;
 .home-card .card-body a{
   font-size: 0.9rem;
   text-decoration: unset;
+}
+.home-card .card-body .btns .btn{
+    background-color:var(--mean-color);
+    color: #fff;
+}
+.home-card .card-body .btns .btn:hover{
+  border: 1px solid #2EE59D !important;
+  color:var(--mean-color) !important;
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff !important;
+  transform: translateY(-7px);
+  transition: all 0.5s;
+  border: none;
 }
 .show-more a{
   
@@ -1008,7 +1084,7 @@ margin-bottom: 10px;
 }
 .category {
  
- background-color: #f5f5f5;
+ background-color: #fff;
  padding: 20px;
 }
 
@@ -1042,6 +1118,12 @@ footer{
   background-color: var(--nav-color);
   color: #240138;
 }
+footer h3{
+  padding-top: 10px;
+  color: #240138;
+  font: 1.2rem 'Heavitas', sans-serif !important;
+
+}
 footer .logo{
 
   font-family: 'Pacifico', 'open-sans';
@@ -1053,10 +1135,12 @@ footer .logo{
   height: 73px;
 }
 footer .btn{
-  
   border: 1px solid var(--mean-color) !important;
   color:#fff !important;
   background-color: var(--mean-color);
+}
+footer .submit .btn{
+font-size: 12px;
 }
 footer .btn:hover{
   
@@ -1068,9 +1152,40 @@ footer .btn:hover{
   transform: translateY(-7px);
   transition: all 0.5s;
   border: none;
+  
 }
 footer .list-group,
 footer .list-group-item{
   background: transparent !important;
+  
+}
+footer .list-group-item{
+ padding:5px;
+  
+}
+
+footer .list-group-item a{
+  color: var(--mean-color);
+  text-decoration: none;
+}
+footer .list-group-item a:hover{
+  color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  transform: translateY(-7px);
+  transition: all 0.5s;
+  
+}
+footer .copyright{
+  background-color: rgba(0, 0, 0, 0.2)
+}
+footer .copyright a{
+  color: #240138;
+}
+footer .copyright a:hover{
+  border-bottom: 1px solid #2EE59D !important;
+  color: #079b60;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  transform: translateY(-7px);
+  transition: all 0.5s;
 }
 /* end footer */

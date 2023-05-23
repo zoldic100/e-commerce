@@ -20,50 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
-<div class="serv" id='services'></div>
-<div class="container-fluid service home-page " >
-<div class="container">
-<div class="row">
-  <div class="col-12 col-md-3 ps-3">
-    <div class="d-flex justify-content-between">
-      <i class="fa-solid fa-truck-fast"></i>
-      <div class="info ps-2">
-        <h5>Fast Shipping</h5>
-        <p>Get your items delivered quickly with our fast shipping service.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-3 ps-3">
-    <div class="d-flex justify-content-between">
-      <i class="fa-solid fa-arrows-rotate"></i>
-      <div class="info ps-2">
-        <h5>Easy Returns</h5>
-        <p>Enjoy hassle-free returns with our easy return policy.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-3 ps-3">
-    <div class="d-flex justify-content-between">
-      <i class="fa-solid fa-headset"></i>
-      <div class="info ps-2">
-        <h5>24/7 Customer Support</h5>
-        <p>Our dedicated team is available 24/7 to assist you with any queries or concerns.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-3 ps-3">
-    <div class="d-flex justify-content-between">
-      <i class="fa-solid fa-bag-shopping"></i>
-      <div class="info ps-2">
-        <h5>Secure Shopping</h5>
-        <p>Shop with confidence knowing that your personal information is safe and secure.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-</div>
-</div>
 <div class="container " id="aboutUs">
 <section class="About r-p " id="About">
   <div class="container mt-5 mt-lg-0">
@@ -110,7 +67,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 </section>
 </div>
+<div class="service" id='services'>
+  <div class="container-fluid service home-page " >
+  <div class="container">
+  <div class="row">
+    <div class="col-12 col-md-3 ps-3">
+      <div class="d-flex justify-content-between">
+        <i class="fa-solid fa-truck-fast"></i>
+        <div class="info ps-2">
+          <h5>Fast Shipping</h5>
+          <p>Get your items delivered quickly with our fast shipping service.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 ps-3">
+      <div class="d-flex justify-content-between">
+        <i class="fa-solid fa-arrows-rotate"></i>
+        <div class="info ps-2">
+          <h5>Easy Returns</h5>
+          <p>Enjoy hassle-free returns with our easy return policy.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 ps-3">
+      <div class="d-flex justify-content-between">
+        <i class="fa-solid fa-headset"></i>
+        <div class="info ps-2">
+          <h5>24/7 Customer Support</h5>
+          <p>Our dedicated team is available 24/7 to assist you with any queries or concerns.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 ps-3">
+      <div class="d-flex justify-content-between">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <div class="info ps-2">
+          <h5>Secure Shopping</h5>
+          <p>Shop with confidence knowing that your personal information is safe and secure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
+  </div>
+</div>
   <!-- start category area -->
   <div class="container-fluid home-page">
   <div class="row category mb-5  ">
@@ -188,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!empty($sessionUser)) {
           ?>
 
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between btns">
                 <div class="buy">
                   <a href="#" class="btn btn-light rounded-pill ">Buy Now</a>
                 </div>
@@ -223,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </div>
 <!-- end container -->
-<div class="container-fluid text-center feedback home-page">
+<div class="container-fluid text-center feedback home-page mb-5">
   <h6>Feedback</h6>
   <h1>What Our Clients Say</h1>
   <div class="row d-flex justify-content-evenly">
@@ -235,9 +236,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             and exceeded my expectations. I highly recommend them!"</p>
         </div>
          <div class="image-container">
-          <img src="https://placehold.co/70x70/000000/FFF" alt="Profile Image" class="rounded-circle">
+          <img src="./client-img/Assouli.png" width="70" height="70" alt="Profile Image" class="rounded-circle">
           <figcaption class="text-dark pt-3 fw-bold">
-            Si El Alawi
+            M.Assouli
           </figcaption>
         </div>
     </div>
@@ -248,9 +249,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          It's of high quality and exactly what I was looking for. Great job!"</p>
         </div>
          <div class="image-container">
-          <img src="https://placehold.co/70x70/000000/FFF" alt="Profile Image" class="rounded-circle">
+          <img src="./client-img/Moutachawik.png" width="70" height="70" alt="Profile Image" class="rounded-circle">
           <figcaption class="text-dark pt-3 fw-bold">
-            Si El Alawi
+            R.Moutachawik
           </figcaption>
         </div>
         
@@ -262,9 +263,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          They were knowledgeable, friendly, and resolved my issue quickly. Thank you!"</p>
         </div>
          <div class="image-container">
-          <img src="https://placehold.co/70x70/000000/FFF" alt="Profile Image" class="rounded-circle">
+          <img src="./client-img/Rmili.png" width="70" height="70" alt="Profile Image" class="rounded-circle">
           <figcaption class="text-dark pt-3 fw-bold">
-            Si El Alawi
+            N.Rmili
           </figcaption>
         </div>
     </div>

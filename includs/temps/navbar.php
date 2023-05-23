@@ -35,7 +35,7 @@ if (isset($_SESSION['user'])){
             <!--end homelink -->
             <!--start About US link -->
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.php#aboutUs">About US</a>
+              <a class="nav-link active" aria-current="page" href="aboutUs.php">About US</a>
             </li>
             <!--end About US link -->
             <!--start Services link -->
@@ -180,7 +180,7 @@ if (isset($_SESSION['user'])){
           <!--end homelink -->
           <!--start About US link -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.php">About US</a>
+            <a class="nav-link active" aria-current="page" href="aboutUs.php">About US</a>
           </li>
           <!--end About US link -->
           <!--start Services link -->
