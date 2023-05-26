@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $pageTitle = $_GET['item'];
+    $pageTitle = 'B&s';
 
     include('init.php');
     
@@ -32,39 +32,58 @@
     <!-- show item details -->
     <div class="row align-items-start showItem mt-5 mb-5">
         
-        <div class="col-md-6 text-center">
+        <div class="col-12 col-lg-6 text-center">
         <?php echo issetImage($item["Image"],'item-image',$item["Name"]); ?>
         <!-- add to cart -->
-        <?php if (isset($_SESSION['user'])) { ?>
-        <div class="addToCart">
+
+        </div>
+
+        <div class="col-12 col-lg-6 info">
+
+            <div class=" d-flex justify-content-evenly items-btns">
+            <?php if (isset($_SESSION['user'])) { ?>
+            <button  class="btn btn-light rounded-pill  Buy-now w-75">Buy Now</button>  
+             
               <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
 
                 <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
                 <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
                 <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
-                <input type="submit" class="btn btn-danger mt-4 ms-4  rounded-pill w-100" name="add_to_cart" value="Add to cart">
+                <button type="submit" id="submit" class="btn btn-light  rounded-pill  " name="add_to_cart">
+                <i class="fa-solid fa-cart-shopping fa-bounce"></i>
+                </button>
               </form>
-            </div>
+           
+
+            <?php }else{ ?>
+
+                <button  class="btn btn-light rounded-pill  Buy-now w-75">Buy Now</button>            
+                  <button class="btn btn-light  rounded-pill add-to-cart ">
+                  <i class="fa-solid fa-cart-shopping fa-bounce"></i>
+                </button> 
             <?php } ?>
-        </div>
-
-        <div class="col-md-6 info">
-
-            <div class=" mt-3 mb-3 pb-3">
-                <span class=" badge rounded-pill bg-primary"><?php echo $item["Name"] ?></span>
-                <span class=" price-hp"><?php echo $item["Price"] ?>&dollar;</span>
             </div>
-            <div class="pb-3">
-                <span class="h3 ">Created by :</span>
-                <span class=" "><?php echo $item["Username"] ?></span>
+            <div id="login-condition" >
+                <p >Please login to add items to your cart.</p>
+                <div class="btns">
+                <button class="CloLog" id="close-button">Close</button>
+                <button class="CloLog"><a href="login.php">login</a></button>
+                </div>
+          </div>
+            <div class=" mt-3  pb-3">
+                <span class=" heading "><?php echo $item["Name"] ?></span>
+                
+            </div>        
+            <div class=" ">
+                <p class=""><?php echo $item["Description"] ?>
+                 Lorem ipsum dolor sit amet consectetur adipisicing 
+                elit. Nam reiciendis nobis dolor praesentium pariatur inventore consectetur cumque.
+                 Blanditiis illo nostrum asperiores voluptatem iusto,
+                 a, molestias, repudiandae harum maiores quo soluta.</p> 
+                <span class=" price-hp heading"><?php echo $item["Price"] ?>&dollar;</span>
             </div>
-            <div class="pb-3">
-                <span class="h3 ">Category :</span>
+            <div class="pb-3 cat  float-end me-5 ">
                 <span class=" "><a href="categories.php?Cat_ID=<?php echo $item["Cat_ID"] ?>&category=<?php echo $item["Category_Name"] ?>"><?php echo $item["Category_Name"] ?></a></span>
-            </div>
-            <div class=" mb-3 ">
-                <span class=" h3 ">Description: </span>
-                <span class=""><?php echo $item["Description"] ?></span>
             </div>
             
 
@@ -87,12 +106,12 @@
             </form>
         <?php else :  ?>
 
-        <div class="col-md-6">
-            <span>
+        <div class="col-12 ">
+            <span class="float-end">
                 <a href="./login.php">Login</a>
                 OR 
                 <a href="./sign_up.php">Sing Up</a>
-                Write a comment
+                to Write a comment
             </span>
 
         </div>

@@ -1,7 +1,7 @@
-setTimeout(function() {
-    var successDiv = document.getElementById('success-alert');
-    successDiv.parentNode.removeChild(successDiv);
-  }, 5000); // Remove the div after 5 seconds (5000 milliseconds)
+// setTimeout(function() {
+//     var successDiv = document.getElementById('success-alert');
+//     successDiv.parentNode.removeChild(successDiv);
+//   }, 5000); // Remove the div after 5 seconds (5000 milliseconds)
 
 // Created for an Articles on:
 // https://www.html5andbeyond.com/bubbling-text-effect-no-canvas-required/
@@ -112,3 +112,115 @@ $('.header').ready(function(){
 
 
 
+$(document).ready(function() {
+  $('#search-item').on('keyup', function() {
+    var input = $(this).val().toLowerCase();
+    $('.card.home-card').each(function() {
+      var itemName = $(this).find('.card-title').text().toLowerCase();
+      var cardContainer = $(this).closest('.searched');
+      if (itemName.includes(input)) {
+        cardContainer.show();
+      } else {
+        cardContainer.hide();
+      }
+    });
+  });
+});
+
+$(document).ready(function() {
+  $('#search-item-nav').on('keyup', function() {
+    var input = $(this).val().toLowerCase();
+    $('.card.home-card').each(function() {
+      var itemName = $(this).find('.card-title').text().toLowerCase();
+      var cardContainer = $(this).closest('.searched');
+      if (itemName.includes(input)) {
+        cardContainer.show();
+      } else {
+        cardContainer.hide();
+      }
+    });
+  });
+});
+
+$(document).ready(function() {
+  $(".add-to-cart").click(function() {
+    // Check if the user is logged in
+    var isLoggedIn = checkLoginStatus(); // Replace this with your login status check
+
+    if (isLoggedIn) {
+      // Add item to cart logic here
+      alert("Item added to cart successfully!");
+    } else {
+      // Show login condition
+      $("#login-condition").show();
+    }
+  });
+  $(".Buy-now").click(function() {
+    // Check if the user is logged in
+    var isLoggedIn = checkLoginStatus(); // Replace this with your login status check
+
+    if (isLoggedIn) {
+      // Add item to cart logic here
+      alert("Item added to cart successfully!");
+    } else {
+      // Show login condition
+      $("#login-condition").show();
+    }
+  });
+
+  // Close the login condition when the "Close" button is clicked
+  $("#close-button").click(function() {
+    $("#login-condition").hide();
+  });
+
+  // Example login status check function
+  function checkLoginStatus() {
+    // Replace this with your own login status check logic
+    // Return true if the user is logged in, false otherwise
+    return false; // Change to true for testing
+  }
+});
+
+// profile
+
+(function($){
+  $.fn.textAnimation = function(animation_speed, text_speed, animation) {
+    var text, i = 0;
+    var $this = $(this);
+
+    // Store text and clear
+    text = $this.text();
+    $this.css('white-space', 'pre');
+    $this.html('');
+
+    var addLetter = setInterval(function() {
+      $this.append('<div class="text_animation" style="display: inline-block; animation: ' + animation + ' ' + animation_speed + 'ms forwards">' + text[i] + '</div>');
+      i++;
+      if (i == text.length) clearInterval(addLetter);
+    }, text_speed);
+  };
+})(jQuery);
+
+var temp = $('.bounce_in_animation').text();
+var i = 1;
+
+$('.bounce_in_animation').textAnimation(250, 50, 'bounceIn');
+
+setInterval(function() {
+  i %= 4;
+  $('.bounce_in_animation').html(temp);
+  switch (i) {
+    case 0:
+      $('.bounce_in_animation').textAnimation(250, 50, 'bounceIn');
+      break;
+    case 1:
+      $('.bounce_in_animation').textAnimation(250, 50, 'slideDown');
+      break;
+    case 2:
+      $('.bounce_in_animation').textAnimation(250, 50, 'slideUp');
+      break;
+    default:
+      $('.bounce_in_animation').textAnimation(250, 50, 'spinIn');
+  }
+  i++;
+}, 1000 + 50 * temp.length + 250);

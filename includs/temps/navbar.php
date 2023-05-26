@@ -38,11 +38,12 @@ if (isset($_SESSION['user'])){
               <a class="nav-link active" aria-current="page" href="aboutUs.php">About US</a>
             </li>
             <!--end About US link -->
-            <!--start Services link -->
+
+            <!--start contactUs.php link -->
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.php?#services">Services</a>
+              <a class="nav-link active" aria-current="page" href="index.php?#contactUs.php">Contact</a>
             </li>
-            <!--end Services link -->
+            <!--end contactUs.php link -->
             <!--start profile link -->
               
             <li class="nav-item">
@@ -57,6 +58,8 @@ if (isset($_SESSION['user'])){
               <?php echo lang('CATEGORIES')?>
               </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item"  href="categories.php">Categories </a></li>
+
                   <?php  
 
                     $categories = getAllData('*','categories','WHERE Parent = 0' , '' , 'Cat_ID' ,'ASC' );
@@ -188,6 +191,11 @@ if (isset($_SESSION['user'])){
             <a class="nav-link active" aria-current="page" href="index.php">Services</a>
           </li>
           <!--end Services link -->
+                     <!--start contactUs.php link -->
+                     <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="contactUs.php">ContactUs</a>
+            </li>
+            <!--end contactUs.php link -->
 
           <!--  categories link -->
           
@@ -196,6 +204,7 @@ if (isset($_SESSION['user'])){
              <?php echo lang('CATEGORIES')?>
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item"  href="categories.php">Categories </a></li>
                 <?php  
 
                   $categories = getAllData('*','categories','WHERE Parent = 0' , '' , 'Cat_ID' ,'ASC' );

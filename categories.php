@@ -1,6 +1,12 @@
 <?php
 
-$pageTitle = 'Categories';
+if( isset( $_GET['name'] )){
+   $pageTitle = $_GET['name'];
+  }
+  if( isset( $_GET['category'] )){
+   $pageTitle = $_GET['category'];
+  }
+$fixed_top="";
 session_start();
 
 include('init.php');
@@ -33,131 +39,22 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_GET['category']) && isset($_GET['Cat_ID'])) {
 ?>
 
-  <div class="container">
+  <div class="container-fluid all-categories seperator">
 
     <h1 class="text-center"><?php echo $_GET['category']; ?></h1>
-    <div class="row">
-      <div id="product-list"></div>
-    </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 show-cat">
-      <?php
-      $catid = isset($_GET['Cat_ID']) && is_numeric($_GET['Cat_ID']) ? intval($_GET['Cat_ID']) : 0;
-
-      $categories = getAllData('*', 'categories', 'WHERE Parent =0', 'AND Cat_ID =' . $catid, 'Cat_ID', 'DESC');
-      foreach ($categories as $categorie) :
-        $childCats = getAllData('*', 'categories', 'WHERE Parent =' . $categorie['Cat_ID'], '', 'Cat_ID', 'DESC');
-        if (!empty($childCats)) { ?>
-          <?php foreach ($childCats as $childCat) : ?>
-
-            <div class="ms-2 d-inline">
-              <a href="./categories.php?Cat_ID=<?= $childCat['Cat_ID'] ?>&category=<?= $childCat['Name'] ?>">
-                <div class="fw-bold text-primary"><?php echo $childCat['Name'] ?></div>
-              </a>
-            </div>
-        <?php
-          endforeach;
-        }
-
-      endforeach;
-
-
-      // get the id from url
-      $catid = isset($_GET['Cat_ID']) && is_numeric($_GET['Cat_ID']) ? intval($_GET['Cat_ID']) : 0;
-      $Items = getAllData('*', 'items', 'WHERE Cat_ID =' . $catid, '', 'Item_ID', 'ASC');
-
-
-      foreach ($Items as $item) :
-        ?>
-        <!-- start col cards -->
-
-        <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
-          <div class="card home-card mb-3">
-            <a href="./showItem.php?item_ID=<?= $item["Item_ID"] ?>">
-              <?php echo issetImage($item["Image"], 'home-img', 'Product'); ?>
-            </a>
-            <div class="card-body">
-
-              <div class="d-flex flex-row bd-highlight align-items-center">
-                <div class="pe-1 bd-highlight">
-                  <h5 class="card-title"><?php echo $item["Name"] ?></h5>
-                </div>
-                <div class="pe-1 bd-highlight desc">
-                  <p class="card-text"><?php echo $item["Description"] ?></p>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="price"> <?php echo $item["Price"] ?>.00$</p>
-
-                <h6 class="card-text text-muted"> <?php echo $item["Date"] ?></h6>
-              </div>
-
-              <?php if ($item["Approve"] == 0) {
-                echo '<p class="card-text">Not approve </p>';
-              } else { ?>
-
-                <div class="d-flex justify-content-between">
-
-                  <div class="buy">
-                    <a href="#" class="btn rounded-pill ">Buy Now</a>
-
-                  </div>
-                  <!-- add to carte -->
-                  <div class="addToCart">
-                    <form action="<?php echo $_SERVER['PHP_SELF'] . '?Cat_ID=' . $_GET['Cat_ID'] . '&category=' . $_GET['category'] ?>" method="post">
-
-                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
-                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
-                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
-                      <input type="submit" class="btn  rounded-pill" name="add_to_cart" value="Add to cart">
-                    </form>
-                  </div>
-
-                </div>
-
-
-              <?php
-              }
-              //end if item approve
-              if (!empty($item["Tags"])) {
-              ?>
-                <div class=" card-text text-muted">
-                  <?php
-                  tags:
-                  $arr = explode(',', $item["Tags"]);
-                  foreach ($arr as $ar) {
-                    $tag = str_replace(' ', '', $ar);
-                    echo '<a href="tags.php?name=' . strtolower($tag), '">' . $tag . '</a> |';
-                  }
-                  ?>
-                </div>
-              <?php } ?>
-            </div>
-            <!--end card body  -->
-          </div>
-          <!-- end card -->
+    <div class="row mb-5 mt-5 d-flex justify-content-evenly align-items-start show-cat">
+    <div class="col-3 phone-hide">
+        <div class="card search">
+        <div class="card-body">
+            
+        <input type="text" name="" id="search-item" placeholder="Search Products">
+          <i class="fa fa-magnifying-glass"></i>
+           </div>
         </div>
-        <!-- end col -->
-
-      <?php endforeach; ?>
-    </div>
-    <!-- end row -->
-  </div>
-  <!-- end-container -->
-<?php
-} else { ?>
-
-<div class="seperator mt-5">
-  <div class="container-fluid all-categories">
-    <h1 class="text-center pb-5">Categories</h1>
-    <div class="row mb-5 mt-5 d-flex justify-content-between align-items-start">
-      <div class="col-3">
         <div class="card">
-          <div class="card-header">
-           <h4 class="text-center"> All Categories </h4>
-          </div>
           <div class="card-body">
+            <h4 class="filter"> Filter by Categories </h4>
             <ul class="list-group list-group-flush">
               <?php $cats = getAllData('*','categories','WHERE Parent =0','','Name','ASC','all') ;
                     foreach($cats as $cat){
@@ -191,11 +88,278 @@ if (isset($_GET['category']) && isset($_GET['Cat_ID'])) {
 
       </div>
       <div class="col-8">
-        <div class="row all-categories">
+      <div class="nav-search-pc">
+            <!-- area will be hide on pc -->
+            <div class="card search">
+              <div class="card-body text-center">
+                  
+              <input type="text" name="" id="search-item-nav" placeholder="Search Products">
+                <i class="fa fa-magnifying-glass"></i>
+                </div>
+            </div>
+             <!-- area will be hide on pc -->
+              <!-- all cat -->
+              <div class="cat-nav card-body ">
+                <ul class="d-flex list-inline justify-content-around flex-wrap ">
+                      <?php $cats = getAllData('*','categories','WHERE Parent = 0','','Name','ASC','all') ;
+                            foreach($cats as $cat){
+                      ?>
+                      
+                      <li class="list-inline-item parent dropdown " >
+                        <a class="nav-link dropdown-toggle " role="button" aria-expanded="false" data-bs-toggle="dropdown" id="navbarDropdown"  href="categories.php?Cat_ID=<?php echo $cat["Cat_ID"] ?>&category=<?php echo $cat["Name"]?>">
+                        <?= $cat['Name'] ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <?php $chilCats = getAllData('*','categories','WHERE Parent ='.$cat['Cat_ID'],'','Name','ASC','all') ;
+                              foreach($chilCats as $chilCat){
+                          ?>
+                            <li class="nav-item dropdown-item child">
+                              <a href="categories.php?Cat_ID=<?php echo $catChilde["Cat_ID"] ?>&category=<?php echo $catChilde["Name"]?>"">
+                                <?= $chilCat['Name'] ?>
+                              </a>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                      </li>
+                      <?php }?>               
+                </ul>
+                </div>
+                <!-- end all cat  -->
+              </div>
+        <div class="row all-product">
+          <?php
+          $catid = isset($_GET['Cat_ID']) && is_numeric($_GET['Cat_ID']) ? intval($_GET['Cat_ID']) : 0;
+
+          $categories = getAllData('*', 'categories', 'WHERE Parent =0', 'AND Cat_ID =' . $catid, 'Cat_ID', 'DESC');
+          foreach ($categories as $categorie) :
+            $childCats = getAllData('*', 'categories', 'WHERE Parent =' . $categorie['Cat_ID'], '', 'Cat_ID', 'DESC');
+            if (!empty($childCats)) { ?>
+              <?php foreach ($childCats as $childCat) : ?>
+
+                <div class="ms-2 d-inline">
+                  <a href="./categories.php?Cat_ID=<?= $childCat['Cat_ID'] ?>&category=<?= $childCat['Name'] ?>">
+                    <div class="fw-bold text-primary"><?php echo $childCat['Name'] ?></div>
+                  </a>
+                </div>
+            <?php
+              endforeach;
+            }
+
+          endforeach;
+
+
+      // get the id from url
+      $catid = isset($_GET['Cat_ID']) && is_numeric($_GET['Cat_ID']) ? intval($_GET['Cat_ID']) : 0;
+      $Items = getAllData('*', 'items', 'WHERE Cat_ID =' . $catid, '', 'Item_ID', 'ASC');
+
+
+      foreach ($Items as $item) :
+        ?>
+        <!-- start col cards -->
+
+        <div class="col-12 col-md-6 searched  mb-3 ">
+
+          <div class="card home-card mb-3">
+            <a href="./showItem.php?item_ID=<?= $item["Item_ID"] ?>">
+              <?php echo issetImage($item["Image"], 'home-img', 'Product'); ?>
+            </a>
+            <div class="card-body">
+
+              <div class="d-flex flex-row bd-highlight align-items-center">
+                <div class="pe-1 bd-highlight">
+                  <h5 class="card-title"><?php echo $item["Name"] ?></h5>
+                </div>
+                <div class="pe-1 bd-highlight desc">
+                  <p class="card-text"><?php echo $item["Description"] ?></p>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="price"> <?php echo $item["Price"] ?>.00$</p>
+
+                <h6 class="card-text text-muted"> <?php echo $item["Date"] ?></h6>
+              </div>
+
+              <?php if ($item["Approve"] == 0) {
+                echo '<p class="card-text">Not approve </p>';
+              } else { if (!empty($sessionUser)) { ?>
+
+                <div class="d-flex justify-content-between btns">
+
+                  <div class="buy">
+                    <a href="#" class="btn rounded-pill ">Buy Now</a>
+
+                  </div>
+                  <!-- add to carte -->
+                  <div class="addToCart">
+                    <form action="<?php echo $_SERVER['PHP_SELF'] . '?Cat_ID=' . $_GET['Cat_ID'] . '&category=' . $_GET['category'] ?>" method="post">
+
+                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                      <input type="submit" class="btn  rounded-pill" name="add_to_cart" value="Add to cart">
+                    </form>
+                  </div>
+
+                </div>
+
+                  <!-- start tag -->
+              <?php
+              }else{?>
+              <div class="d-flex justify-content-between btns">
+                
+                  <button  class="btn btn-light rounded-pill  Buy-now">Buy Now</button>            
+                  <button class="btn btn-light  rounded-pill add-to-cart"> Add To cart</button>  
+                </div>  
+                
+              
+          <?php  
+            }
+          }
+          ?>
+ 
+          <div id="login-condition" >
+            <p >Please login to add items to your cart.</p>
+            <div class="btns">
+              <button class="CloLog" id="close-button">Close</button>
+              <button class="CloLog"><a href="login.php">login</a></button>
+            </div>
+          </div>
+              <?php
+              //end if item approve
+              if (!empty($item["Tags"])) {
+              ?>
+                <div class=" card-text text-muted">
+                  <?php
+                  tags:
+                  $arr = explode(',', $item["Tags"]);
+                  foreach ($arr as $ar) {
+                    $tag = str_replace(' ', '', $ar);
+                    echo '<a href="tags.php?name=' . strtolower($tag), '">' . $tag . '</a> |';
+                  }
+                  ?>
+                </div>
+              <?php } ?>
+              <!-- end tag -->
+            </div>
+            <!--end card body  -->
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+      <?php endforeach; ?>
+    </div>
+    <!-- end row all-product -->
+  </div>
+  <!-- end-col-8 -->
+  </div>
+  <!-- end-row-show-cat -->
+  </div>
+  <!-- end-container-fluid -->
+<?php
+} else { ?>
+
+
+<div class="seperator ">
+  <div class="container-fluid all-categories">
+    <h1 class="text-center pb-5">Categories</h1>
+
+    <div class="row mb-5 mt-5 d-flex justify-content-evenly align-items-start">
+      <!-- area will be hide on the phones -->
+      <div class="col-3 phone-hide">
+        <!-- input search -->
+        <div class="card search">
+          <div class="card-body">  
+             <input type="text" name="" id="search-item" placeholder="Search Products">
+            <i class="fa fa-magnifying-glass"></i>
+           </div>
+        </div>
+        <!--end input search -->
+        <!--all categories -->
+        <div class="card">
+          <div class="card-body">
+            <h4 class="filter"> Filter by Categories </h4>
+            <ul class="list-group list-group-flush">
+              <?php $cats = getAllData('*','categories','WHERE Parent =0','','Name','ASC','all') ;
+                    foreach($cats as $cat){
+              ?>
+              
+              <li class="list-group-item parent">
+                <a href="categories.php?Cat_ID=<?php echo $cat["Cat_ID"] ?>&category=<?php echo $cat["Name"]?>">
+                <?= $cat['Name'] ?>
+                </a>
+                <ul class="">
+                  <?php $chilCats = getAllData('*','categories','WHERE Parent ='.$cat['Cat_ID'],'','Name','ASC','all') ;
+                      foreach($chilCats as $chilCat){
+                  ?>
+                  
+                    <li class=" child">
+                      <a href="categories.php?Cat_ID=<?php echo $catChilde["Cat_ID"] ?>&category=<?php echo $catChilde["Name"]?>"">
+                        <?= $chilCat['Name'] ?>
+                      </a>
+                    </li>
+                    <?php }
+                  ?>
+                </ul>
+              </li>
+
+              <?php }
+              ?>
+
+            </ul>
+          </div>
+        </div>
+        <!-- end all categories -->
+      </div>
+        <!-- end area will be hide on the phones -->
+
+      <div class="col-lg-8 col-11">
+        
+          <div class="nav-search-pc">
+            <!-- area will be hide on pc -->
+            <div class="card search">
+              <div class="card-body text-center">
+                  
+              <input type="text" name="" id="search-item-nav" placeholder="Search Products">
+                <i class="fa fa-magnifying-glass"></i>
+                </div>
+            </div>
+             <!-- area will be hide on pc -->
+              <!-- all cat -->
+              <div class="cat-nav card-body ">
+                <ul class="d-flex list-inline justify-content-around flex-wrap ">
+                      <?php $cats = getAllData('*','categories','WHERE Parent = 0','','Name','ASC','all') ;
+                            foreach($cats as $cat){
+                      ?>
+                      
+                      <li class="list-inline-item parent dropdown " >
+                        <a class="nav-link dropdown-toggle " role="button" aria-expanded="false" data-bs-toggle="dropdown" id="navbarDropdown"  href="categories.php?Cat_ID=<?php echo $cat["Cat_ID"] ?>&category=<?php echo $cat["Name"]?>">
+                        <?= $cat['Name'] ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <?php $chilCats = getAllData('*','categories','WHERE Parent ='.$cat['Cat_ID'],'','Name','ASC','all') ;
+                              foreach($chilCats as $chilCat){
+                          ?>
+                            <li class="nav-item dropdown-item child">
+                              <a href="categories.php?Cat_ID=<?php echo $catChilde["Cat_ID"] ?>&category=<?php echo $catChilde["Name"]?>"">
+                                <?= $chilCat['Name'] ?>
+                              </a>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                      </li>
+                      <?php }?>               
+                </ul>
+                </div>
+                <!-- end all cat  -->
+              </div>
+          
+        <div class="row all-product">
               
                 <?php foreach ($items as $item) : ?>
               
-              <div class=" col-12 col-md-4  mb-3 ">
+              <div class="col-12 col-md-6   mb-3 searched ">
                 <div class="card home-card mb-5">
                   <a href="./showItem.php?item=<?php echo $item["Name"] ?>&item_ID=<?= $item["Item_ID"] ?>">
                     <?php echo issetImage($item["Image"], 'home-img', 'Product'); ?>
@@ -225,33 +389,67 @@ if (isset($_GET['category']) && isset($_GET['Cat_ID'])) {
                     </div>
 
                     <?php if ($item["Approve"] == 0) {
-                      echo '<p class="card-text">Not approve </p>';
-                    } else {
-                      if (!empty($sessionUser)) {
-                    ?>
+                echo '<p class="card-text">Not approve </p>';
+              } else { if (!empty($sessionUser)) { ?>
 
-                        <div class="d-flex justify-content-between btns">
-                          <div class="buy">
-                            <a href="#" class="btn btn-light rounded-pill ">Buy Now</a>
-                          </div>
+                <div class="d-flex justify-content-between btns">
 
-                          <!-- add to carte -->
-                          <div class="addToCart">
-                            <form action="<?php echo $_SERVER['PHP_SELF'] ?> " method="post">
+                  <div class="buy">
+                    <a href="#" class="btn rounded-pill ">Buy Now</a>
 
-                              <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
-                              <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
-                              <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
-                              <input type="submit" class="btn btn-light  rounded-pill" name="add_to_cart" value="Add to cart">
-                            </form>
-                          </div>
+                  </div>
+                  <!-- add to carte -->
+                  <div class="addToCart">
+                    <form action="<?php echo $_SERVER['PHP_SELF'] . '?Cat_ID=' . $_GET['Cat_ID'] . '&category=' . $_GET['category'] ?>" method="post">
 
-                        </div>
-                    <?php
-                      }
-                    }
-                    ?>
+                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                      <input type="submit" class="btn  rounded-pill" name="add_to_cart" value="Add to cart">
+                    </form>
+                  </div>
 
+                </div>
+
+                  <!-- start tag -->
+              <?php
+              }else{?>
+              <div class="d-flex justify-content-between btns">
+                
+                  <button  class="btn btn-light rounded-pill  Buy-now">Buy Now</button>            
+                  <button class="btn btn-light  rounded-pill add-to-cart"> Add To cart</button>  
+                </div>  
+                
+              
+          <?php  
+            }
+          }
+          ?>
+ 
+          <div id="login-condition" >
+            <p >Please login to add items to your cart.</p>
+            <div class="btns">
+              <button class="CloLog" id="close-button">Close</button>
+              <button class="CloLog"><a href="login.php">login</a></button>
+            </div>
+          </div>
+              <?php
+              //end if item approve
+              if (!empty($item["Tags"])) {
+              ?>
+                <div class=" card-text text-muted">
+                  <?php
+                  
+                  $arr = explode(',', $item["Tags"]);
+                  foreach ($arr as $ar) {
+                    $tag = str_replace(' ', '', $ar);
+                    echo '<a href="tags.php?name=' . strtolower($tag), '">' . $tag . '</a> |';
+                  }
+                  ?>
+                </div>
+              <?php } ?>
+              <!-- end tag -->
+              <!-- end tag -->
                   </div>
                   <!-- end card body -->
                 </div>

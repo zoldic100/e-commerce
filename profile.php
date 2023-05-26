@@ -23,100 +23,48 @@ if($userStatus == 1 ){
 
 
 ?>
-<div class="container emp-profile">
-    
-        <!-- PROFILE AREA -->
-        <div class="row">
-            <!-- PROFILE IMAGE -->
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <?php if (isset($user['Img'])): ?>
-                    <img class="rounded-5" src="./layout/images/<?php echo $user['Img'] ?>" alt="" />
-                    <?php else: ?>
-                        <img class="rounded-4" src="./layout/images/random.jpg" alt="" />
-                    <?php endif; ?>
 
-                    <!--upload image <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" name="file" />
-                    </div> -->
-                </div>
-            </div>
-            <!-- END PROFILE IMAGE -->
-            <!-- START BAR -->
-            <div class="col-md-6">
-                <!-- nav links -->
-                <div class="profile-head">
+<div class="all">
+    <div id="showcase_table"><div id="showcase_cell">
 
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Ads</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comments</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- end nav links -->
+        <div class="bounce_in_animation"> hello <?php echo $_SESSION['user'] ?></div>
 
-                <!-- start user info -->
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      </div>
+    </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>User Id</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><?php echo $_SESSION['ID'] ?></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Name</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><?php echo $_SESSION['user'] ?></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Email</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><?php echo $user['Email'] ?></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Phone</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>123 456 7890</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Current Ads</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>2</p>
-                            </div>
-                        </div>
+    <div class="img_user">
+        <?php if (isset($user['Img'])): ?>
+            <img class="rounded-circle" src="./layout/images/<?php echo $user['Img'] ?>" alt="" />
+        <?php else: ?>
+            <img class="rounded-4" src="./layout/images/avatar.png" alt="" />
+        <?php endif; ?>
+    </div>
 
-                    </div>
-                </div>
-                <!-- end user info -->
-            </div>
-            <!-- end bar -->
-            <div class="col-md-2">
-                <a href="#"class="profile-edit-btn btn btn-light rounded-pill">Edit Profile</a>
-            </div>
-        </div>
-        <!-- END PROFILE AREA -->
+    <div class="profil-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 about-me ">
+       <h2>About Me</h2>
+       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+         Nihil laboriosam vitae, corrupti esse commodi quod iusto maxime 
+         repellat magni blanditiis veritatis placeat, est rem minima cumque
+          error? Vero, excepturi officiis.</p>
+      </div>
+      <div class="col-sm-4">
         
-    
+      </div>
+      <div class="col-sm-4">
+       <h2>achat</h2>
+       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Nihil laboriosam vitae, corrupti esse commodi quod iusto maxime 
+        repellat magni blanditiis veritatis placeat, est rem minima cumque
+         error? Vero, excepturi officiis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <div class="container emp-profile"id="profile">
     <div class="row">

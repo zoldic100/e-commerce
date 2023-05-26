@@ -6,7 +6,7 @@ $fixed_top="";
 include('init.php');
 include($temps . "/hero.php");
 // select all items 
-$stmt = $conn->prepare('SELECT items.* , categories.Name AS Category_Name , users.Username AS Username FROM items INNER JOIN categories ON categories.Cat_ID = items.Cat_ID INNER JOIN users ON users.UserID = items.Member_ID  WHERE items.Approve = 1  ORDER BY Item_ID DESC');
+$stmt = $conn->prepare('SELECT items.* , categories.Name AS Category_Name , users.Username AS Username FROM items INNER JOIN categories ON categories.Cat_ID = items.Cat_ID INNER JOIN users ON users.UserID = items.Member_ID  WHERE items.Approve = 1 AND items.Rating = 5  ORDER BY Item_ID DESC');
 
 
 $stmt->execute();
@@ -186,8 +186,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <?php if ($item["Approve"] == 0) {
             echo '<p class="card-text">Not approve </p>';
           } else {
-            if (!empty($sessionUser)) {
-          ?>
+            if (!empty($sessionUser)) { ?>
+         
 
               <div class="d-flex justify-content-between btns">
                 <div class="buy">
@@ -207,15 +207,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
               </div>
           <?php
+            }else{?>
+              <div class="d-flex justify-content-between btns">
+                
+                  <button  class="btn btn-light rounded-pill  Buy-now">Buy Now</button>            
+                  <button class="btn btn-light  rounded-pill add-to-cart"> Add To cart</button>  
+                </div>  
+                
+              
+          <?php  
             }
           }
           ?>
-
+ 
+          <div id="login-condition" >
+            <p >Please login to add items to your cart.</p>
+            <div class="btns">
+              <button class="CloLog" id="close-button">Close</button>
+              <button class="CloLog"><a href="login.php">login</a></button>
+            </div>
+          </div>
         </div>
         <!-- end card body -->
       </div>
       <!-- end card -->
     </div>
+
     <!-- end col -->
   <?php endforeach; ?>
   <!-- end foreach items -->
@@ -223,6 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <!-- end row product -->
 
 </div>
+
 <!-- end container -->
 <div class="container-fluid text-center feedback home-page mb-5">
   <h6>Feedback</h6>
