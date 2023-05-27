@@ -181,46 +181,29 @@ $(document).ready(function() {
   }
 });
 
-// profile
-
-(function($){
-  $.fn.textAnimation = function(animation_speed, text_speed, animation) {
-    var text, i = 0;
-    var $this = $(this);
-
-    // Store text and clear
-    text = $this.text();
-    $this.css('white-space', 'pre');
-    $this.html('');
-
-    var addLetter = setInterval(function() {
-      $this.append('<div class="text_animation" style="display: inline-block; animation: ' + animation + ' ' + animation_speed + 'ms forwards">' + text[i] + '</div>');
-      i++;
-      if (i == text.length) clearInterval(addLetter);
-    }, text_speed);
-  };
-})(jQuery);
-
-var temp = $('.bounce_in_animation').text();
-var i = 1;
-
-$('.bounce_in_animation').textAnimation(250, 50, 'bounceIn');
-
-setInterval(function() {
-  i %= 4;
-  $('.bounce_in_animation').html(temp);
-  switch (i) {
-    case 0:
-      $('.bounce_in_animation').textAnimation(250, 50, 'bounceIn');
-      break;
-    case 1:
-      $('.bounce_in_animation').textAnimation(250, 50, 'slideDown');
-      break;
-    case 2:
-      $('.bounce_in_animation').textAnimation(250, 50, 'slideUp');
-      break;
-    default:
-      $('.bounce_in_animation').textAnimation(250, 50, 'spinIn');
+$(document).ready(function() {
+  function typeWriter(text, i, repeatCount) {
+    if (repeatCount > 0) {
+      if (i < text.length) {
+        var currentText = document.getElementById("myText").innerHTML;
+        currentText += text.charAt(i);
+        document.getElementById("myText").innerHTML = currentText;
+        i++;
+        setTimeout(function() {
+          typeWriter(text, i, repeatCount);
+        }, 100);
+      } else {
+        setTimeout(function() {
+          document.getElementById("myText").innerHTML = ""; // Clear the text
+          typeWriter(text, 0, repeatCount - 1); // Repeat typing with decreased repeat count
+        }, 1000); // Delay between repetitions (1 second)
+      }
+    }
   }
-  i++;
-}, 1000 + 50 * temp.length + 250);
+
+  var initialText = document.getElementById("myText").innerHTML; // Get the initial text value from HTML
+
+  document.getElementById("myText").innerHTML = ""; // Clear the initial text
+
+  typeWriter(initialText, 0, 100);
+});

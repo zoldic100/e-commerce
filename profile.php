@@ -2,6 +2,7 @@
 session_start();
 $pageTitle = 'profile';
 
+$fixed_top="";
 include('init.php');
 
 if (isset($_SESSION['user'])) {
@@ -24,46 +25,40 @@ if($userStatus == 1 ){
 
 ?>
 
-<div class="all">
-    <div id="showcase_table"><div id="showcase_cell">
+<div class="profile text-center">
+   
 
-        <div class="bounce_in_animation"> hello <?php echo $_SESSION['user'] ?></div>
+        <h1 class="text-center" id="myText">hello <?php echo $_SESSION['user'] ?></h1> 
 
-      </div>
-    </div>
+        <div class="detail_profile row">
+            <div class="img_user col-4 ">
+                <p class="mt-4"><?php echo $user['Username'] ?></p>
+               <p> <?php echo $user['Email'] ?></p>
+            </div>
+            <div class="img_user col-4 ">
+                <?php if (isset($user['Img'])): ?>
+                    <img class="rounded-circle" src="./layout/images/<?php echo $user['Img'] ?>" alt="" />
+                <?php else: ?>
+                    <img class="rounded-circle" src="./layout/images/avatar.png" alt="" />
+                <?php endif; ?>
+                <br>
+                <?php echo $user['FullName'] ?>
 
-    <div class="img_user">
-        <?php if (isset($user['Img'])): ?>
-            <img class="rounded-circle" src="./layout/images/<?php echo $user['Img'] ?>" alt="" />
-        <?php else: ?>
-            <img class="rounded-4" src="./layout/images/avatar.png" alt="" />
-        <?php endif; ?>
-    </div>
-
-    <div class="profil-container">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4 about-me ">
-       <h2>About Me</h2>
-       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-         Nihil laboriosam vitae, corrupti esse commodi quod iusto maxime 
-         repellat magni blanditiis veritatis placeat, est rem minima cumque
-          error? Vero, excepturi officiis.</p>
-      </div>
-      <div class="col-sm-4">
-        
-      </div>
-      <div class="col-sm-4">
-       <h2>achat</h2>
-       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Nihil laboriosam vitae, corrupti esse commodi quod iusto maxime 
-        repellat magni blanditiis veritatis placeat, est rem minima cumque
-         error? Vero, excepturi officiis.</p>
+            </div>
+            <div class="img_user col-4  ">
+                <p class="mt-4"> Total Ads : 5</p>
+                <p class=""> Card Status : 5 item</p>
+                <p class=""> total comment: 15  </p>
+                
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+
 </div>
+    
+
+
+
+   
 
 
 <div class="container emp-profile"id="profile">

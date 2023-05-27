@@ -1103,179 +1103,120 @@ border: none;
 
 
 /* houssam */
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  20% {
-    opacity: 1;
-  }
-  40% {
-    transform: scale(1.15)
-  }
-  70% {
-    transform: scale(.9)
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes slideDown {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  40% {
-    transform: translateY(5px);
-  }
-  70% {
-    transform: translateY(-3px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  40% {
-    transform: translateY(-3px);
-  }
-  70% {
-    transform: translateY(5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes spinIn {
-  0% {
-    opacity: 0;
-    transform: rotate(180deg) scale(0);
-  }
-  20% {
-    opacity: 1;
-  }
-  40% {
-    transform: rotate(360deg) scale(1.15)
-  }
-  70% {
-    transform: rotate(360deg) scale(.9)
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
-
-
-
-@import url('https://fonts.googleapis.com/css?family=Lato:900');
-@media only screen and (max-width: 600px) {
-  #showcase_cell{
-    margin-top: none;
-  }
- 
-}
-
-
-.all {
-  height: 400px;
+.profile{
+  background-color: var(--nav-color);
+  height: 50vh;
   width: 100%;
-  background-color: #bccaff;
-  color: #ffffff;
-  font-family: 'Lato', sans-serif;
-  font-size: 30pt;
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  margin: 76px  0 90px;
+
+}
+.profile h1{
+
+ color: white;
+ margin: 0;
+ padding-top: 50px;
+}
+.detail_profile {
+  background-color: #f4f4f4;
+  width: 60%;
+  height: 220px;
+  border-radius: 15px;
+  margin: 5% auto;
+  font-size: 16px;
 }
 
-
-
-/* profil-container */
-.profil-container {
-  height: 400px;
-  width: 70rem;
-  z-index: 100;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin-top: 120px;
-  background-color: #ffffff;
-  color: #ffffff;
-  font-family: 'Lato', sans-serif;
-  font-size: 30pt;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  border-radius: 30px 30px 0 0;
-  color: black;
+.detail_profile img {
+  margin: 12px;
+  width: 150px;
 }
-.about-me{
- 
-  margin-top: 15px;
+
+@media (max-width: 1200px) {
+  .profile h1{
+    padding-top: 30px;
+   }
+  .profile{
+    background-color: var(--nav-color);
+    margin-top: 76px;
+    height: 45vh;
   
-}
+  }
+  .detail_profile {
+    margin: 5% auto;
+    height: 250px;
+    width: 60%;
+  }
 
-/* profil-container */
-.profil-container p{
-  color: gray;
-  font-size: 15px;
+  .detail_profile img {
+    width: 100px;
+  }
 }
-.profil-container h2{
-  color: #bccaff;
-}
-
-
-/* image profil */
-.img_user img{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  z-index: 1000;
+@media (max-width: 913px) {
+  .profile h1{
+    padding-top: 20px;
+   }
+  .profile{
+    background-color: var(--nav-color);
+    height: 40vh;
+    width: 100%;
+    margin: 76px 0 90px;
   
+  }
+  .detail_profile {
+    margin: 4% auto;
+    height: 200px;
+    width: 70%;
+  }
+
+  .detail_profile img {
+
+    width: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .profile{
+    background-color: var(--nav-color);
+    height: 35vh;
+    width: 100%;
+    margin-bottom: 100px;
+   
   
-}
-/* image profil */
+  }
+  .detail_profile {
+    width: 80%;
+    height: 180px;
+    margin: 3% auto;
+    font-size: 12px;
+  }
 
-
-/* text */
-#showcase_table {
-  display: table;
-  width: 100%;
-  height: 100%;
-}
-
-#showcase_cell {
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 120px;
+  .detail_profile img {
+    width: 100px;
+  }
 }
 
-.bounce_in_animation {
-  text-align: center;
-  display: inline;
-  width: 350px;
- 
+@media (max-width: 480px) {
+  .profile{
+    height: 30vh;
+    margin-bottom: 116px;
+  
+  }
+  .profile h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.5rem;
+    padding-top: 10px;
 }
+  .detail_profile {
+    width: 90%;
+    height: 150px;
+    font-size: 11px;
+    margin: 2% auto;
+  }
+
+  .detail_profile img {
+    width: 80px;
+  }
+}
+
 /* houssam */
 
 .emp-profile{
