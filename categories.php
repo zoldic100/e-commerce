@@ -2,9 +2,10 @@
 
 if( isset( $_GET['name'] )){
    $pageTitle = $_GET['name'];
-  }
-  if( isset( $_GET['category'] )){
+  }else if( isset( $_GET['category'] )){
    $pageTitle = $_GET['category'];
+  }else{
+    $pageTitle = 'Categories';
   }
 $fixed_top="";
 session_start();
@@ -187,7 +188,15 @@ if (isset($_GET['category']) && isset($_GET['Cat_ID'])) {
                 <div class="d-flex justify-content-between btns">
 
                   <div class="buy">
-                    <a href="#" class="btn rounded-pill ">Buy Now</a>
+                    <form action="buyNow.php" method="post">
+
+                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                      <input type="hidden" name="name" value="<?php echo $item["Name"] ?>">
+                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                      <input type="hidden" name="img" value="<?php echo $item["Image"] ?>">
+                      <input type="submit" class="btn btn-light  rounded-pill" name="buy" value="Buy Now">
+                    </form>
 
                   </div>
                   <!-- add to carte -->
@@ -395,13 +404,25 @@ if (isset($_GET['category']) && isset($_GET['Cat_ID'])) {
                 <div class="d-flex justify-content-between btns">
 
                   <div class="buy">
-                    <a href="#" class="btn rounded-pill ">Buy Now</a>
+                    <form action="buyNow.php" method="post">
+
+                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                      <input type="hidden" name="name" value="<?php echo $item["Name"] ?>">
+                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                      <input type="hidden" name="img" value="<?php echo $item["Image"] ?>">
+                      <input type="submit" class="btn btn-light  rounded-pill" name="buy" value="Buy Now">
+                    </form>
 
                   </div>
                   <!-- add to carte -->
                   <div class="addToCart">
+                    <?php if(isset($_GET['Cat_ID'])) { ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . '?Cat_ID=' . $_GET['Cat_ID'] . '&category=' . $_GET['category'] ?>" method="post">
+                    <?php }else{ ?>
+                      <form action="<?php echo $_SERVER['PHP_SELF']  ?>" method="post">
 
+                      <?php } ?>
                       <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
                       <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
                       <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">

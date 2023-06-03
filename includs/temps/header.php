@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="<?= $css ?>/bootstrap.min.css">
     <link rel="stylesheet" href="<?= $css ?>/bootstrap.min.css">
 
-    
+     <!-- Replace "test" with your own sandbox Business account app client ID -->
+     <script src="https://www.paypal.com/sdk/js?client-id=AWXKUXp9hKb4_BrHR4g4cy61RX8kP1YP7sEiwyrjJBYGZUtfTH78ikdTIqEEipQF6WqJ7w_ICzfcRKyJ&currency=USD"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
@@ -24,3 +26,26 @@
 </head>
 
 <body>
+
+<style>
+  /* Customize the PayPal Smart Buttons container */
+  #paypal-button-container {
+    text-align: center;
+  }
+
+  /* Customize the PayPal Smart Buttons */
+  .paypal-button {
+    color: #fff;
+    background-color: red;
+    border-color: #0070ba;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Style the PayPal Smart Buttons on hover */
+  .paypal-button:hover {
+    background-color: #005f9b;
+  }
+</style>

@@ -8,7 +8,7 @@ include('init.php');
 if(isset($_SESSION['user'])){
 $userStatus = checkUserStatus($_SESSION['user']);
 if($userStatus == 1 ){
-  echo "you need to be activated by admin";
+ // echo "you need to be activated by admin";
 }
 }
 //get the user id from url
@@ -24,16 +24,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
   $stmtX->execute();
 }
+  $total = countPrice($_SESSION['ID']);
 
+   // get the id from url
 
-            // get the id from url
-
-            $stmt = $conn->prepare('SELECT shopping_cart.* , items.Name AS Iname ,items.Tags, items.Description, items.Approve, items.Image, users.Username AS Uname
-                            FROM shopping_cart  
-                            INNER JOIN items ON items.Item_ID = shopping_cart.Item_ID
-                            INNER JOIN users ON users.UserID = shopping_cart.UserID
-                            WHERE shopping_cart.UserID ='.$uId.' ORDER BY CartID ASC' 
-                          );
+  $stmt = $conn->prepare('SELECT shopping_cart.* , items.Name AS Iname ,items.Tags, items.Description, items.Approve, items.Image, users.Username AS Uname
+                  FROM shopping_cart  
+                  INNER JOIN items ON items.Item_ID = shopping_cart.Item_ID
+                  INNER JOIN users ON users.UserID = shopping_cart.UserID
+                  WHERE shopping_cart.UserID ='.$uId.' ORDER BY CartID ASC' 
+                );
 
     $stmt->execute();
     $items = $stmt->fetchAll();
@@ -44,89 +44,68 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   <h1 class="text-center">Shopping card</h1>
 
   <div class="row">
-    <div id="product-list"></div>
-  </div>
+  <div class="col-12 col-md-9">
+  <table class="table table-dark table-hover">
+  <thead>
+    <th> N° </th>
+    <th> Image </th>
+    <th> Name </th>
+    <th> Qantity</th>
+    <th> Price</th>
+    <th> Delete</th>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4 show-cat">
-    <?php
-
-
-    foreach ($items as $item) { ?>
-
-
-      <div class="col-md-3 col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-evenly">
-      <div class="card home-card mb-3">
-     
-      <a href="./showItem.php?item=<?php echo $item["Iname"] ?>&item_ID=<?= $item["Item_ID"] ?>">
-          <?php echo issetImage($item["Image"],'home-img','Product'); ?>
-        </a>
-
-             
-      <div class="card-body">
-        <div class="d-flex flex-row bd-highlight align-items-center">
-          <div class="pe-1 bd-highlight">
-            <a href="./showItem.php?item_ID=<?php echo $item["Item_ID"] ?>">
-              <h5 class="card-title"><?php echo $item["Iname"] ?></h5>
+  </thead>
+  <tbody>
+    <?php $i=1; foreach ($items as $item) { ; ?>
+      <tr>
+        <th><?= $i ?></th>
+        <td>         
+           <a href="./showItem.php?item=<?php echo $item["Iname"] ?>&item_ID=<?= $item["Item_ID"] ?>">
+              <?php echo issetImage($item["Image"],'shoping-img','Product'); ?>
             </a>
-          </div>
+        </td>
+        <td>
+          <a href="./showItem.php?item_ID=<?php echo $item["Item_ID"] ?>">
+            <h5 class="card-title"><?php echo $item["Iname"] ?></h5>
+          </a>
+        </td>
+        <td>  <?php echo $item["quantity"] ?> </td>
+        <td><?php echo $item["Price"] ?>.00$</td>
+        <td>
+        <div class="deletefromCart">
+          <form action="<?php echo $_SERVER['PHP_SELF'] ?>?uId=<?= $_SESSION['ID'] ?>"method="post">
 
-          <div class="pe-1 bd-highlight desc">
-            <p class="card-text"><?php echo $item["Description"] ?></p>
-          </div>
+            <input type="hidden" name="cartid" value="<?php echo $item["CartID"] ?>">
+            <input type="submit" class="btn btn-danger rounded-pill confirm" name="delete_from_cart" value="Delete">
+
+          </form>
         </div>
-          <div class="d-flex justify-content-between align-items-center">
-          <p class="price"> <?php echo $item["Price"] ?>.00$</p>
-          
-            <h6 class="card-text text-muted"> <?php echo $item["updated_at"] ?></h6>
-          </div>
-
-          <?php if($item["Approve"]==0){ echo '<p class="card-text">Not approve </p>';}else{ ?>
-
-            <div class="d-flex justify-content-between">
-              <div class="buy">
-                <a href="#" class="btn rounded-pill ">Buy Now</a>
-              <!--deletefromCart -->
-              </div>
-              <div class="deletefromCart">
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>?uId=<?= $_SESSION['ID'] ?>"method="post">
-
-                  <input type="hidden" name="cartid" value="<?php echo $item["CartID"] ?>">
-                  <input type="submit" class="btn  rounded-pill confirm" name="delete_from_cart" value="Delete">
-
-                </form>
-              </div>
-            </div>
-            <div class="quantity">
-            <h6 class="card-text fw-bold fs-4">Quantity: <?php echo $item["quantity"] ?></h6>
-
-            </div>
-          <?php }?>
-          <?php if (!empty($item["Tags"])){ ?>
-            <div class=" card-text text-muted">
-              <?php
-                  tags:
-                  $arr= explode(',', $item["Tags"]);
-                  foreach($arr as $ar){
-                    $tag = str_replace(' ','',$ar);
-                    echo '<a href="tags.php?name='.strtolower($tag),'">'.$tag.'</a> |';
-                  }
-                ?>
-              </div>
-          <?php } ?>
-        </div> 
-    </div>
-      </div>
-    <?php  } 
-    //<!-- end foreach items -->
-
-    $total = countPrice($_SESSION['ID']);
+        </td>
+      </tr>
+      <?php  $i++; } //<!-- end foreach items --> ?>
+  </tbody>
+  <tfoot>
+    <th class="text-center fs-4">
+      Total :
+    </th>
+   
+    <td colspan="5 " class="text-center">
+      
+      <span class="text-danger fs-4 fw-bold"><?= $total ?>DH</span>
     
+  </td>
 
-    ?>
+  </tfoot>
+  </table>
   </div>
-  <div class="confirm text-center">
-      <h1 class="display-4 pt-5 text-center "> total price is : <span class="text-danger"><?= $total ?>DH</span></h1>
-      <button class="btn btn-success">confirm</button>
+    <div class="col-12 col-md-3">
+      <div class="confirm text-center">
+        <h2> Pay by : </h2>
+
+          <div id="paypal-button-container" class="text-center"></div>
+          
+      </div>
+    </div>
   </div>
   
 </div>
@@ -138,5 +117,51 @@ else:
 
 endif;
 
-include($temps . "/footer.php");
+include($temps . "/footer.php"); 
+?>
 
+
+
+
+<script> 
+  var total = <?= $total ?>;
+  paypal.Buttons({
+
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: <?= $total ?> // Replace with actual purchase amount
+          }
+        }]
+      });
+    },
+   onApprove: function(data, actions) { 
+      return actions.order.capture().then(function(details) {
+        // Handle the payment completion and show success message
+        alert('Payment completed successfully!');
+        
+        // Check if payment status is 'COMPLETED'
+      if (details.status === 'COMPLETED') {
+        // Execute the PHP code to delete data from the shopping cart
+        <?php
+        $uid = $_GET['uId'];
+        $stmtX = $conn->prepare('DELETE FROM shopping_cart WHERE UserID = :uid');
+        $stmtX->bindParam(':uid', $uid);
+       // $stmtX->execute();
+        ?>
+        
+        // Reload the page
+        window.location.reload();
+      }
+
+      });
+
+
+    }
+  }).render('#paypal-button-container');
+</script>
+
+    <?php // header('Location: index.php');
+        //exit;
+      ?>

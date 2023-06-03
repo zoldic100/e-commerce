@@ -3,7 +3,7 @@
   $pageTitle ='B&S';
 
   include('init.php');   
-
+if(isset($_SESSION['ID'])){
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
@@ -292,4 +292,12 @@ if (empty($errors)) {
 <!-- end container -->
 
 <?php 
+
+
 include($temps . "/footer.php");
+
+
+}else{?>
+   <div class="alert alert-danger">You need to log in to create a product</div>  
+<?php
+}

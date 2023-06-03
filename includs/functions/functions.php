@@ -91,6 +91,36 @@ function addToCarte($submit, $itemprice, $itemid, $userid)
         $stmt->execute();
     }
 }
+function buyNow($submit, $itemprice, $itemid, $userid)
+{
+    global $conn;
+
+
+    if (isset($submit)) {
+
+        $price = $itemprice;
+        $product = $itemid;
+        $user = $userid;
+
+        
+        $productQantity = getAllData('*', 'shopping_cart', 'where Item_ID =' . $product, '', 'Item_ID', 'ASC', 'one');
+
+        $checkUser = checkIfAlreadyUsed('shopping_cart', 'UserID', $user, 'AND Item_ID = '.$product);
+        
+        if ($checkUser > 0 ) {
+                echo 'Update the quantity of the existing item  :';
+                echo '<br> u'.$checkUser;
+                $quantity = $productQantity['quantity'] + 1;
+
+                $stmt = $conn->prepare(' UPDATE `shopping_cart` SET `quantity` = :quantity WHERE Item_ID = :pID ');
+
+                $stmt->bindParam(":pID", $product);
+                $stmt->bindParam(":quantity", $quantity);
+
+            } 
+        $stmt->execute();
+    }
+}
 function countPrice($userid){
 
     global $conn;
@@ -110,6 +140,20 @@ function countQuantity($userid){
     global $conn;
 
     $CountQ =  $conn->prepare('SELECT SUM(quantity) as Total FROM shopping_cart WHERE UserID = :userid');
+    
+    $CountQ->bindParam(':userid',$userid);
+
+    $CountQ->execute();
+
+    $total = $CountQ->fetch();
+
+    return $total['Total'];
+}
+function countUserThing( $col, $table ,$where,$userid){
+
+    global $conn;
+
+    $CountQ =  $conn->prepare(' SELECT count('.$col.') as Total from '.$table.' WHERE '.$where.' = :userid');
     
     $CountQ->bindParam(':userid',$userid);
 

@@ -453,17 +453,21 @@ color: #f4f4f4;
     padding-left: 0;
     width: 100% ;
     text-align: center;
+    height: 80vh;
   }
   .ag-format-container,
   .ag-format-container .logo {
     width: 100% ;
     text-align: center;
   }
+  .ag-format-container .logo{
+    margin: 4% 0 20px;
+    font-size: 5rem;
+  }
+
   #login-img{
     background-image: url('login_img.png');
-    
     height: 5vh;
-    
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; 
@@ -475,11 +479,20 @@ color: #f4f4f4;
   .ag-format-container {
     width: 90%;
   }
+  .abus .our-team{
+    display:none;
+  }
 }
 
 @media only screen and (max-width: 639px) {
   .ag-maecenas_title {
     font-size: 60px;
+    margin-top: 100px;
+    height: 70vh;
+  }
+  footer span {
+    font-size: 12px;
+ 
   }
 }
 
@@ -494,7 +507,8 @@ color: #f4f4f4;
     text-align: center;
   }
   .ag-format-container .logo{
-    margin: 30% 0 20px;
+    margin: 10% 0 20px;
+    font-size: 4rem;
   }
   #login-img{
     background-image: url('login_img.png');
@@ -513,7 +527,7 @@ color: #f4f4f4;
   }
 
   .ag-maecenas_title {
-    font-size: 40px;
+    font-size: 30px;
     height: 70vh;
     padding-left: 0;
   }
@@ -1338,7 +1352,13 @@ background-color: #f4f4f4;
 border-radius: 50px;
   
 }
-.showItem form {
+.showItem .addToCarte form {
+  
+  margin: 6px 0 0;
+  height: 61px;
+  
+}
+.showItem .buy form {
   
   margin: 6px 0 0;
   height: 61px;
@@ -1492,7 +1512,7 @@ footer{
 footer h3{
   padding-top: 10px;
   color: #240138;
-  font: 1.2rem 'Heavitas', sans-serif !important;
+  font: 1rem 'Heavitas', sans-serif !important;
 
 }
 footer .logo{
@@ -1560,3 +1580,22 @@ footer .copyright a:hover{
   transition: all 0.5s;
 }
 /* end footer */
+
+/* shopping cart */
+.paypal-button-row.paypal-button-layout-vertical {
+  margin-bottom: 100px;
+  background-color: #2EE59D;
+}
+ td img.shoping-img{
+  width: 60px;
+  border-radius: 2px;
+ }
+ td a .card-title{
+color: #fff;
+text-decoration: none;
+ }
+ td a {
+text-decoration: none;
+ }
+
+/* shopping cart */

@@ -70,37 +70,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="service" id='services'>
   <div class="container-fluid service home-page " >
   <div class="container">
-  <div class="row">
-    <div class="col-12 col-md-3 ps-3">
-      <div class="d-flex justify-content-between">
+  <div class="row text-center">
+    <div class="col-6 col-md-3 ps-3">
+      <div class="row">
+        <div class="col-12">
         <i class="fa-solid fa-truck-fast"></i>
+        </div>
         <div class="info ps-2">
           <h5>Fast Shipping</h5>
           <p>Get your items delivered quickly with our fast shipping service.</p>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-3 ps-3">
-      <div class="d-flex justify-content-between">
+    <div class="col-6 col-md-3 ps-3">
+      <div class="row">
+        <div class="col-12">
         <i class="fa-solid fa-arrows-rotate"></i>
+        </div>
         <div class="info ps-2">
           <h5>Easy Returns</h5>
           <p>Enjoy hassle-free returns with our easy return policy.</p>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-3 ps-3">
-      <div class="d-flex justify-content-between">
+    <div class="col-6 col-md-3 ps-3">
+      <div class="row">
+        <div class="col-12">
         <i class="fa-solid fa-headset"></i>
+        </div>
         <div class="info ps-2">
           <h5>24/7 Customer Support</h5>
           <p>Our dedicated team is available 24/7 to assist you with any queries or concerns.</p>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-3 ps-3">
-      <div class="d-flex justify-content-between">
-        <i class="fa-solid fa-bag-shopping"></i>
+    <div class="col-6 col-md-3 ps-3">
+      <div class="row">
+        <div class="col-12">
+         <i class="fa-solid fa-bag-shopping"></i>
+        </div>
         <div class="info ps-2">
           <h5>Secure Shopping</h5>
           <p>Shop with confidence knowing that your personal information is safe and secure.</p>
@@ -191,7 +199,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
               <div class="d-flex justify-content-between btns">
                 <div class="buy">
-                  <a href="#" class="btn btn-light rounded-pill ">Buy Now</a>
+                  <form action="buyNow.php" method="post">
+
+                      <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                      <input type="hidden" name="name" value="<?php echo $item["Name"] ?>">
+                      <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                      <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                      <input type="hidden" name="img" value="<?php echo $item["Image"] ?>">
+                      <input type="submit" class="btn btn-light  rounded-pill" name="buy" value="Buy Now">
+                    </form>
+                  
                 </div>
 
                 <!-- add to carte -->

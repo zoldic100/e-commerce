@@ -96,7 +96,7 @@ if (isset($_SESSION['user'])){
           <li class="nav-item  margin-img ">
             <a href="profile.php">
               
-              <?php echo issetImage($user["Img"]," nav-img rounded-circle","Profile image"); ?>
+              <?php echo issetImage('profile/'.$user["Img"]," nav-img rounded-circle","Profile image"); ?>
             </a>
           </li>
 
@@ -122,7 +122,7 @@ if (isset($_SESSION['user'])){
               ?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="members.php?do=Edit&ID=<?php echo $_SESSION['ID'] ?>">Edit profile</a></li>
+              <li><a class="dropdown-item" href="update.php?ID=<?php echo $_SESSION['ID'] ?>">Edit profile</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="logout.php">Logout</a></li>

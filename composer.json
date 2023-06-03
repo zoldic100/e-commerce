@@ -1,0 +1,17 @@
+{
+    "name": "pc/e-commerce",
+    "autoload": {
+        "psr-4": {
+            "Pc\\ECommerce\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "zoldic100",
+            "email": "omarmaarouf86@gmail.com"
+        }
+    ],
+    "require": {
+        "paypal/checkout-sdk": "^1.0"
+    }
+}

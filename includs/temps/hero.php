@@ -9,7 +9,7 @@
     <div class="ag-format-container  h2">
     <p> Find Everything You Need  In One Place</p>
     <div class="hero-btns">
-      <button class="btn shop btn-light rounded-pill ">Shop Now</button>
+      <a href="categories.php" class="btn shop btn-light rounded-pill " >Shop Now</a>
       <a href="createItem.php" class="btn sell btn-light rounded-pill">Sell Now</a>
     </div>
     </div>

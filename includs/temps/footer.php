@@ -6,21 +6,24 @@
         <div class="row pt-4">
             <div class="col-4">
                 <h3>Contact</h3>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+                <ul class="list-group list-group-flush text-center ">
+                    <li class="list-group-item row    ">
+
                         <a href="#">
-                            <i class="fa-solid fa-phone pe-3"></i>
-                            06-37-21-24-81 
+                            <i class="fa-solid fa-phone pe-1 col-12 "></i>
+                            <span class="col-12"> 06-37-21-24-81 </span>
                         </a>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item row">
                         <a href="#">
-                        <i class="fa-solid fa-envelope pe-3"></i>buy&sell@gmail.com
+                        <i class="fa-solid fa-envelope pe-1 col-12 "></i>
+                        <span class="col-12"> buy&sell@gmail.com </span>
                         </a> 
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item row">
                         <a href="https://www.google.com/maps/dir//ENSAM+CASABLANCA,+150+Bd+du+Nil,+Casablanca+20670/@33.5642624,-7.569408,13z/data=!4m2!4m1!3e0">
-                            <i class="fa-solid fa-location-dot pe-3"></i> ENSAM CASABLANCA, 150 Bd du Nil, Casablanca 20670
+                        <i class="fa-solid fa-location-dot pe-1 col-12 "></i> 
+                        <span class="col-12"> ENSAM CASABLANCA, 150 Bd du Nil, Casablanca 20670 </span>
                         </a>
                     </li>
 

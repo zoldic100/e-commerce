@@ -32,23 +32,23 @@ if($userStatus == 1 ){
 
         <div class="detail_profile row">
             <div class="img_user col-4 ">
-                <p class="mt-4"><?php echo $user['Username'] ?></p>
-               <p> <?php echo $user['Email'] ?></p>
+                <p class="mt-4 fw-bolder"> Username : <?php echo $user['Username'] ?></p>
+               <p class="fw-bold"> Email : <?php echo $user['Email'] ?></p>
             </div>
             <div class="img_user col-4 ">
                 <?php if (isset($user['Img'])): ?>
-                    <img class="rounded-circle" src="./layout/images/<?php echo $user['Img'] ?>" alt="" />
+                    <img class="rounded-circle" src="layout/images/profile/<?php echo $user['Img'] ?>" alt="<?php echo $user['Img'] ?>" />
                 <?php else: ?>
-                    <img class="rounded-circle" src="./layout/images/avatar.png" alt="" />
+                    <img class="rounded-circle" src="./layout/images/random.jpg" alt="" />
                 <?php endif; ?>
                 <br>
-                <?php echo $user['FullName'] ?>
+              <span class="h2 fw-bolder" >  <?php echo $user['FullName'] ?></span>
 
             </div>
             <div class="img_user col-4  ">
-                <p class="mt-4"> Total Ads : 5</p>
-                <p class=""> Card Status : 5 item</p>
-                <p class=""> total comment: 15  </p>
+                <p class="mt-4 fw-bold"> Total Ads : <?php echo countUserThing('Name','items', 'Member_ID',$_SESSION['ID']) ?> </p>
+                <p class="fw-bold"> Card Status : <?php echo countUserThing('UserID','shopping_cart', 'UserID',$_SESSION['ID']) ?></p>
+                <p class="fw-bold"> total comment: <?php echo countUserThing('CMT_ID','comments', 'Member_ID',$_SESSION['ID']) ?>  </p>
                 
             </div>
         </div>
@@ -63,7 +63,7 @@ if($userStatus == 1 ){
 
 <div class="container emp-profile"id="profile">
     <div class="row">
-        <h1 class="text-center">My Ads</h1>
+        <h1 class="text-center mt-5">My Ads</h1>
         
         <?php  
             $check = checkIfAlreadyUsed('items', 'Member_ID', $user['UserID']);

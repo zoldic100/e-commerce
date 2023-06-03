@@ -156,8 +156,16 @@
                   <div class="d-flex justify-content-between btns">
 
                     <div class="buy">
-                      <a href="#" class="btn rounded-pill ">Buy Now</a>
+                        
+                      <form action="buyNow.php" method="post">
 
+                        <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                        <input type="hidden" name="name" value="<?php echo $item["Name"] ?>">
+                        <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                        <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                        <input type="hidden" name="img" value="<?php echo $item["Image"] ?>">
+                        <input type="submit" class="btn btn-light  rounded-pill" name="buy" value="Buy Now">
+                      </form>
                     </div>
                     <!-- add to carte -->
                     <div class="addToCart">

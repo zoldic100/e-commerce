@@ -42,22 +42,38 @@
 
             <div class=" d-flex justify-content-evenly items-btns">
             <?php if (isset($_SESSION['user'])) { ?>
-            <button  class="btn btn-light rounded-pill  Buy-now w-75">Buy Now</button>  
-             
-              <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
+                <div class="buy w-75">
+                    <form action="buyNow.php" method="post">
 
-                <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
-                <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
-                <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
-                <button type="submit" id="submit" class="btn btn-light  rounded-pill  " name="add_to_cart">
-                <i class="fa-solid fa-cart-shopping fa-bounce"></i>
-                </button>
-              </form>
-           
+                        <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                        <input type="hidden" name="name" value="<?php echo $item["Name"] ?>">
+                        <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                        <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                        <input type="hidden" name="img" value="<?php echo $item["Image"] ?>">
+                        <input type="submit" class="btn btn-light rounded-pill  Buy-now w-100" name="buy" value="Buy Now">
+                    </form>
+                </div>
+                <div class="addToCarte">
+                    <?php if(isset($_GET['item'])) { ?>
+                
+                    <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
+                        <?php }else{ ?>
+                        <form action="<?php echo $_SERVER['PHP_SELF'].'?item_ID='.$_GET['item_ID']   ?>" method="post">
 
-            <?php }else{ ?>
+                        <?php } ?>
+                        <input type="hidden" name="price" value="<?php echo $item["Price"] ?>">
+                        <input type="hidden" name="itemid" value="<?php echo $item["Item_ID"] ?>">
+                        <input type="hidden" name="memberid" value="<?php echo $item["Member_ID"] ?>">
+                        <button type="submit" id="submit" class="btn btn-light  rounded-pill  " name="add_to_cart">
+                        <i class="fa-solid fa-cart-shopping fa-bounce"></i>
+                        </button>
+                    </form>
+                </div>
 
-                <button  class="btn btn-light rounded-pill  Buy-now w-75">Buy Now</button>            
+                     <?php }else{ ?>
+
+                <button  class="btn btn-light rounded-pill  Buy-now w-75">Buy Now</button>  
+                          
                   <button class="btn btn-light  rounded-pill add-to-cart ">
                   <i class="fa-solid fa-cart-shopping fa-bounce"></i>
                 </button> 
@@ -94,8 +110,13 @@
 
     <div class="row mt-3">
         <?php if (isset($_SESSION['user'])) :?>
-
+            <?php if(isset($_GET['Cat_ID'])) { ?>
             <form action="<?php echo $_SERVER['PHP_SELF'].'?item='.$_GET["item"].'&item_ID='.$_GET['item_ID'] ?> "method="post">
+            <?php }else{ ?>
+                <form action="<?php echo $_SERVER['PHP_SELF'].'?item_ID='.$_GET['item_ID']   ?>" method="post">
+
+                <?php } ?>
+               
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="comment" class="mr-2 h5">Write a comment:</label>
